@@ -14,7 +14,7 @@ namespace Servicios.Colecciones.DobleEnlazadas
 
         public bool Desapilar(ref Tipo prmItem)
         {
-            return ExtraerEn(0, prmItem);
+            return ExtraerEn(0, ref prmItem);
         }
 
         public bool Revisar(ref Tipo prmItem)

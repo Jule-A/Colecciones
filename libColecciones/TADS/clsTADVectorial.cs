@@ -20,7 +20,21 @@ namespace Servicios.Colecciones.TADS
 
        private bool DezplazarItems(bool prmHaciaDerecha, int prmIndice)
         {
-            if (atrLongitud == atrCapacidad)
+            if (prmHaciaDerecha)
+                for (varIndice = atrLongitud - 1; varIndice >= atrCapacidad; varIndice--)
+                    atrVectorDeItems[varIndice + 1] = atrVectorDeItems[varIndice];
+            else
+                for (varIndice = prmIndice; varIndice < atrLongitud; varIndice++)
+                    atrVectorDeItems[varIndice] = atrVectorDeItems[varIndice + 1];
+            return true;
+        }
+
+        #endregion
+        #region CRUDS - Query
+        protected override bool InsertarEn(int prmIndice, Tipo prmItem)
+        {
+            if (estaLlena())
+            {
                 if (atrCapacidadFlexible)
                 {
                     Tipo[] varVectorAuxiliar = new Tipo[atrCapacidad + atrFactorDeCrecimiento];
@@ -37,24 +51,11 @@ namespace Servicios.Colecciones.TADS
                     atrCapacidad += atrFactorDeCrecimiento;
                     atrLongitud += 1;
                     atrVectorDeItems = varVectorAuxiliar;
-                        for (int varIndice = atrLongitud - 1; varIndice >= prmIndice; varIndice--)
+                    for (int varIndice = atrLongitud - 1; varIndice >= prmIndice; varIndice--)
                         atrVectorDeItems[varIndice + 1] = atrVectorDeItems[varIndice];
                     atrVectorDeItems[prmIndice] = prmItem;
-
                 }
-            atrLongitud += 1;
-            return false;
-        }
-        #endregion
-        #region CRUDS - Query
-        protected override bool InsertarEn(int prmIndice, Tipo prmItem)
-        {
-            if (estaLlena())
-            {
-                if (atrCapacidadFlexible)
-                {
-
-                }
+                atrLongitud += 1;
             }
             return false;
         }
