@@ -18,10 +18,32 @@ namespace Servicios.Colecciones.TADS
             return atrCapacidad == atrLongitud;
         }
 
-       private bool DezplazarItems(bool prmHaciaDerecha, int prmIndice)
+       private bool DesplazarItems(bool prmHaciaDerecha, int prmIndice)
         {
+            if (prmHaciaDerecha && estaLlena() && atrCapacidadFlexible)
+            {
+                Tipo[] varVectorAuxiliar = new Tipo[atrCapacidad + atrFactorDeCrecimiento];
+
+                int varIndice2 = 0;
+                for (int varIndice1 = 0; varIndice1 < prmIndice; varIndice1++)
+                {
+                    if (varIndice1 != prmIndice)
+                    {
+                        varVectorAuxiliar[varIndice1] = atrVectorDeItems[varIndice2];
+                        varIndice2++;
+                    }
+                    else
+                    {
+                        varIndice2--;
+                    }
+                    atrCapacidad += atrFactorDeCrecimiento;
+                    atrVectorDeItems = varVectorAuxiliar;
+                    return true;
+                }
+            }
+
             if (prmHaciaDerecha)
-                for (varIndice = atrLongitud - 1; varIndice >= atrCapacidad; varIndice--)
+                for (varIndice = atrLongitud - 1; varIndice >= prmIndice; varIndice--)
                     atrVectorDeItems[varIndice + 1] = atrVectorDeItems[varIndice];
             else
                 for (varIndice = prmIndice; varIndice < atrLongitud; varIndice++)
@@ -33,28 +55,9 @@ namespace Servicios.Colecciones.TADS
         #region CRUDS - Query
         protected override bool InsertarEn(int prmIndice, Tipo prmItem)
         {
-            if (estaLlena())
+            if (DesplazarItems(true, prmIndice))
             {
-                if (atrCapacidadFlexible)
-                {
-                    Tipo[] varVectorAuxiliar = new Tipo[atrCapacidad + atrFactorDeCrecimiento];
-                    varVectorAuxiliar[prmIndice] = prmItem;
-
-                    //for (int varIndice = 0; varIndice < prmIndice; varIndice++)
-                    //    varVectorAuxiliar[varIndice] = atrVectorDeItems[varIndice];
-                    //for (int varIndice = prmIndice + 1; varIndice < atrLongitud; varIndice++)
-                    //    varVectorAuxiliar[varIndice] = atrVectorDeItems[varIndice];
-
-                    int varIndice2 = 0;
-
-                    //for (int varIndice1 = 0; varIndice1  )
-                    atrCapacidad += atrFactorDeCrecimiento;
-                    atrLongitud += 1;
-                    atrVectorDeItems = varVectorAuxiliar;
-                    for (int varIndice = atrLongitud - 1; varIndice >= prmIndice; varIndice--)
-                        atrVectorDeItems[varIndice + 1] = atrVectorDeItems[varIndice];
-                    atrVectorDeItems[prmIndice] = prmItem;
-                }
+                atrVectorDeItems[prmIndice] = prmItem;
                 atrLongitud += 1;
             }
             return false;
