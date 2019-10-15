@@ -5,11 +5,11 @@ namespace Servicios.Colecciones.TADS
     public class clsTADVectorial<Tipo>: clsTAD<Tipo> where Tipo : IComparable
     {
         #region Atributos
-        protected Tipo[] atrVectorDeItems = new Tipo[int.MaxValue/16];
-        private bool atrCapacidadFlexible=true;
-        private int atrCapacidad=int.MaxValue/16;
-        private int atrFactorDeCrecimiento=1;
-        private int varIndice;
+        protected Tipo[] atrVectorDeItems;// = new Tipo[int.MaxValue/16];
+        private bool atrCapacidadFlexible = true;
+        private int atrCapacidad;// = int.MaxValue/16;
+        private int atrFactorDeCrecimiento = 1;
+
         #endregion
         #region Metodos
         #region Auxiliares
@@ -20,10 +20,10 @@ namespace Servicios.Colecciones.TADS
 
        private bool DesplazarItems(bool prmHaciaDerecha, int prmIndice)
         {
-            if (prmHaciaDerecha && estaLlena() && atrCapacidadFlexible)
+            if (estaLlena() && prmHaciaDerecha && atrCapacidadFlexible)
             {
                 Tipo[] varVectorAuxiliar = new Tipo[atrCapacidad + atrFactorDeCrecimiento];
-
+                atrCapacidad += atrFactorDeCrecimiento;
                 int varIndice2 = 0;
                 for (int varIndice1 = 0; varIndice1 < prmIndice; varIndice1++)
                 {
@@ -36,17 +36,16 @@ namespace Servicios.Colecciones.TADS
                     {
                         varIndice2--;
                     }
-                    atrCapacidad += atrFactorDeCrecimiento;
                     atrVectorDeItems = varVectorAuxiliar;
-                    return true;
                 }
             }
 
-            if (prmHaciaDerecha)
-                for (varIndice = atrLongitud - 1; varIndice >= prmIndice; varIndice--)
+            if (!estaLlena() && prmHaciaDerecha)
+                for (int varIndice = atrLongitud - 1; varIndice >= prmIndice; varIndice--)
                     atrVectorDeItems[varIndice + 1] = atrVectorDeItems[varIndice];
-            else
-                for (varIndice = prmIndice; varIndice < atrLongitud; varIndice++)
+
+            if (!prmHaciaDerecha)
+                for (int varIndice = prmIndice; varIndice < atrLongitud; varIndice++)
                     atrVectorDeItems[varIndice] = atrVectorDeItems[varIndice + 1];
             return true;
         }
@@ -55,10 +54,14 @@ namespace Servicios.Colecciones.TADS
         #region CRUDS - Query
         protected override bool InsertarEn(int prmIndice, Tipo prmItem)
         {
-            if (DesplazarItems(true, prmIndice))
+            if (EsValido(prmIndice))
             {
-                atrVectorDeItems[prmIndice] = prmItem;
-                atrLongitud += 1;
+                if (DesplazarItems(true, prmIndice))
+                {
+                    atrVectorDeItems[prmIndice] = prmItem;
+                    atrLongitud += 1;
+                    return true;
+                }
             }
             return false;
         }
