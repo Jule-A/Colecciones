@@ -79,14 +79,31 @@ namespace Servicios.Colecciones.TADS
         }
         protected override bool ExtraerEn(int prmIndice, ref Tipo prmItem)
         {
+            if (esValido(prmIndice))
+            {
+                prmItem = atrVectorDeItems[prmIndice];
+                DesplazarItems(false, prmIndice);
+                atrLongitud--;
+                return true;
+            }
             return false;
         }
         protected override bool ModificarEn(int prmIndice, Tipo prmItem)
         {
+            if (esValido(prmIndice))
+            {
+                atrVectorDeItems[prmIndice] = prmItem;
+                return true;
+            }
             return false;
         }
         protected override bool RecuperarEn(int prmIndice, ref Tipo prmItem)
         {
+            if (esValido(prmIndice))
+            {
+                prmItem = atrVectorDeItems[prmIndice];
+                return true;
+            }
             return false;
         }
         #endregion
