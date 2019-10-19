@@ -1,18 +1,18 @@
-﻿using System;
+using System;
 
 namespace Servicios.Colecciones.TADS
 {
-    public class clsTADVectorial<Tipo>: clsTAD<Tipo> where Tipo : IComparable
+    public class clsTADVectorial<Tipo> : clsTAD<Tipo> where Tipo : IComparable
     {
         #region Atributos
         protected Tipo[] atrVectorDeItems;// = new Tipo[int.MaxValue/16];
         private bool atrCapacidadFlexible = true;
         private int atrCapacidad;// = int.MaxValue/16;
         private int atrFactorDeCrecimiento = 1;
-
         #endregion
         #region Metodos
         #region Auxiliares
+
         public bool estaLlena()
         {
             return atrCapacidad == atrLongitud;
@@ -67,14 +67,31 @@ namespace Servicios.Colecciones.TADS
         }
         protected override bool ExtraerEn(int prmIndice, ref Tipo prmItem)
         {
+            if (esValido(prmIndice))
+            {
+                prmItem = atrVectorDeItems[prmIndice];
+                DesplazarItems(false, prmIndice);
+                atrLongitud--;
+                return true;
+            }
             return false;
         }
         protected override bool ModificarEn(int prmIndice, Tipo prmItem)
         {
+            if (esValido(prmIndice))
+            {
+                atrVectorDeItems[prmIndice] = prmItem;
+                return true;
+            }
             return false;
         }
         protected override bool RecuperarEn(int prmIndice, ref Tipo prmItem)
         {
+            if (esValido(prmIndice))
+            {
+                prmItem = atrVectorDeItems[prmIndice];
+                return true;
+            }
             return false;
         }
         #endregion
