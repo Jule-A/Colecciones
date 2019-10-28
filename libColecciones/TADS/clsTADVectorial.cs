@@ -67,7 +67,7 @@ namespace Servicios.Colecciones.TADS
         }
         protected override bool ExtraerEn(int prmIndice, ref Tipo prmItem)
         {
-            if (esValido(prmIndice))
+            if (EsValido(prmIndice))
             {
                 prmItem = atrVectorDeItems[prmIndice];
                 DesplazarItems(false, prmIndice);
@@ -78,7 +78,7 @@ namespace Servicios.Colecciones.TADS
         }
         protected override bool ModificarEn(int prmIndice, Tipo prmItem)
         {
-            if (esValido(prmIndice))
+            if (EsValido(prmIndice))
             {
                 atrVectorDeItems[prmIndice] = prmItem;
                 return true;
@@ -87,7 +87,7 @@ namespace Servicios.Colecciones.TADS
         }
         protected override bool RecuperarEn(int prmIndice, ref Tipo prmItem)
         {
-            if (esValido(prmIndice))
+            if (EsValido(prmIndice))
             {
                 prmItem = atrVectorDeItems[prmIndice];
                 return true;

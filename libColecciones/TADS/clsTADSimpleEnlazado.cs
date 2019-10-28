@@ -12,6 +12,16 @@ namespace Servicios.Colecciones.TADS
         #region CRUDS
         protected override bool InsertarEn(int prmIndice, Tipo prmItem)
         {
+            if (EsValido(prmIndice))
+            {
+                clsNodoSimpleEnlazado<Tipo> varNodoNuevo = new clsNodoSimpleEnlazado<Tipo>(prmItem);
+                clsNodoSimpleEnlazado<Tipo> varNodoActual = atrNodoPrimero;
+                for (int varIndice = 0; varIndice < prmIndice; varIndice++)
+                    varNodoActual = varNodoActual.darSiguiente();
+                varNodoNuevo.ponerSiguiente(varNodoActual.darSiguiente());
+                varNodoActual.ponerSiguiente(varNodoNuevo);
+                atrLongitud++;
+            }
             return false;
         }
         protected override bool ExtraerEn(int prmIndice, ref Tipo prmItem)
