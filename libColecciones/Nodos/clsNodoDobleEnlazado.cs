@@ -6,6 +6,7 @@ namespace Servicios.Colecciones.Nodos
     {
         private clsNodoDobleEnlazado<Tipo> atrAnterior;
         private clsNodoDobleEnlazado<Tipo> atrSiguiente;
+        public clsNodoDobleEnlazado(Tipo prmItem) : base(prmItem) { }
         public clsNodoDobleEnlazado<Tipo> darAnterior() { return atrAnterior; }
         public void ponerAnterior(clsNodoDobleEnlazado<Tipo> prmNodo) { atrAnterior = prmNodo; }
         public clsNodoDobleEnlazado<Tipo> darSiguiente() { return atrSiguiente; }
