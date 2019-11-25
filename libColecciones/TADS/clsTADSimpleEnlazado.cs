@@ -60,5 +60,9 @@ namespace Servicios.Colecciones.TADS
             return false;
         }
         #endregion
+        #region Accesores
+        public clsNodoSimpleEnlazado<Tipo> darNodoPrimero() { return atrNodoPrimero; }
+        public clsNodoSimpleEnlazado<Tipo> darNodoUltimo() { return atrNodoUltimo; }
+        #endregion
     }
 }

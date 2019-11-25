@@ -6,6 +6,13 @@ namespace Servicios.Colecciones.Vectoriales
 {
     public class clsPilaVector<Tipo>: clsTADVectorial<Tipo>, iPila<Tipo> where Tipo : IComparable
     {
+        #region Constructores
+        public clsPilaVector() { }
+        public clsPilaVector(int prmCapacidad) { }
+        public clsPilaVector(int prmCapacidad, int prmFactorDeCrecimiento) { }
+        public clsPilaVector(bool prmCapacidadFlexible) { }
+        public clsPilaVector(int prmCapacidad, bool prmCapacidadFlexible, bool prmOrdenDescendente, bool prmModoInteligente) { }
+        #endregion
         #region Métodos
         public bool Apilar(Tipo prmItem) { return InsertarEn(0, prmItem); }
         public bool Desapilar(ref Tipo prmItem) { return ExtraerEn(0, ref prmItem); }

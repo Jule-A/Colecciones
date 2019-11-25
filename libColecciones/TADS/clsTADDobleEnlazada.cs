@@ -9,6 +9,7 @@ namespace Servicios.Colecciones.TADS
         private clsNodoDobleEnlazado<Tipo> atrNodoPrimero;
         private clsNodoDobleEnlazado<Tipo> atrNodoUltimo;
         #endregion
+        #region Metodos
         #region CRUDS
         protected override bool InsertarEn(int prmIndice, Tipo prmItem)
         {
@@ -63,6 +64,11 @@ namespace Servicios.Colecciones.TADS
         {
             return false;
         }
+        #endregion
+        #region Accesores
+        public clsNodoDobleEnlazado<Tipo> darNodoPrimero() { return atrNodoPrimero; }
+        public clsNodoDobleEnlazado<Tipo> darNodoUltimo() { return atrNodoUltimo; }
+        #endregion
         #endregion
     }
 }

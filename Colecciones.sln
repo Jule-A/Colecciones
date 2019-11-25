@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libColecciones", "libColecciones\libColecciones.csproj", "{D7B2C148-8F2B-4450-B51F-92C3E6C38DAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uTest", "uTest\uTest.csproj", "{4B820E71-C4E8-4D24-829A-FDC70DAFA556}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uTestColecciones", "uTest\uTestColecciones.csproj", "{4B820E71-C4E8-4D24-829A-FDC70DAFA556}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
