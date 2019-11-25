@@ -11,6 +11,8 @@ namespace Servicios.Colecciones.TADS
         #region Auxiliares
         protected bool EsValido(int prmIndice){ return prmIndice >= 0 && prmIndice < atrLongitud; }
         protected bool EstaVacia() { return atrLongitud == 0; }
+
+        public int darLongitud() { return atrLongitud; }
         #endregion
         #region CRUDS - Query
         protected virtual bool InsertarEn(int prmIndice, Tipo prmItem) { return false; }

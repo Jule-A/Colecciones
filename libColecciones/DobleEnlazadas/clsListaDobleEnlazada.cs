@@ -1,35 +1,36 @@
-﻿using Servicios.Colecciones.Interfaces;
-using System;
+﻿using System;
+using Servicios.Colecciones.TADS;
+using Servicios.Colecciones.Interfaces;
 
-namespace Servicios.Colecciones.SimpleEnlazadas
+namespace Servicios.Colecciones.DobleEnlazadas
 {
-    public class clsListaDobleEnlazada<Tipo> : iLista<Tipo> where Tipo : IComparable
+    public class clsListaDobleEnlazada<Tipo> : clsTADDobleEnlazado<Tipo>, iLista<Tipo> where Tipo : IComparable
     {
         #region Métodos
+        #region CRUDS
         public bool Agregar(Tipo prmItem)
         {
             throw new NotImplementedException();
         }
-
-        public bool Insertar(Tipo prmItem, int prmIndice)
+        public bool Insertar(int prmIndice, Tipo prmItem)
         {
             throw new NotImplementedException();
         }
-
-        public bool Modificar(ref Tipo prmItem, int prmIndice)
+        public bool Modificar(int prmIndice, Tipo prmItem)
         {
             throw new NotImplementedException();
         }
-
-        public bool Remover(ref Tipo prmItem, int prmIndice)
+        public bool Remover(int prmIndice, ref Tipo prmItem)
         {
             throw new NotImplementedException();
         }
-
         public bool Revisar(ref Tipo prmItem)
         {
             throw new NotImplementedException();
         }
+        public bool Recuperar(int prmIndice, ref Tipo prmItem) { return false; }
+        public bool Reversar() { return false; }
+        #endregion
         #endregion
     }
 }

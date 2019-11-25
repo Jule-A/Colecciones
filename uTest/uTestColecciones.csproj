@@ -8,8 +8,8 @@
     <ProjectGuid>{4B820E71-C4E8-4D24-829A-FDC70DAFA556}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>uTest</RootNamespace>
-    <AssemblyName>uTest</AssemblyName>
+    <RootNamespace>uTestColecciones</RootNamespace>
+    <AssemblyName>uTestColecciones</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,8 +49,26 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="clsPersona.cs" />
+    <Compile Include="DobleEnlazadas\uTestColaDobleEnlazadaConstructoresV1.cs" />
+    <Compile Include="DobleEnlazadas\uTestColaDobleEnlazadaCRUDV1.cs" />
+    <Compile Include="DobleEnlazadas\uTestListaDobleEnlazadaConstructoresV1.cs" />
+    <Compile Include="DobleEnlazadas\uTestListaDobleEnlazadaCRUDV1.cs" />
+    <Compile Include="DobleEnlazadas\uTestPilaDobleEnlazadaCRUDV1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleEnlazadas\uTestColaSimpleEnlazadaConstructoresV1.cs" />
+    <Compile Include="SimpleEnlazadas\uTestColaSimpleEnlazadaCRUDV1.cs" />
+    <Compile Include="SimpleEnlazadas\uTestListaSimpleEnlazadaConstructoresV1.cs" />
+    <Compile Include="SimpleEnlazadas\uTestListaSimpleEnlazadaCRUDV1.cs" />
+    <Compile Include="SimpleEnlazadas\uTestPilaSimpleEnlazadaConstructoresV1.cs" />
+    <Compile Include="SimpleEnlazadas\uTestPilaSimpleEnlazadaCRUDV1.cs" />
+    <Compile Include="uTestOrdenamiento.cs" />
+    <Compile Include="Vectoriales\uTestColaVectorConstructoresV1.cs" />
+    <Compile Include="Vectoriales\uTestColaVectorCRUDV1.cs" />
+    <Compile Include="Vectoriales\uTestListaVectorConstructoresV1.cs" />
+    <Compile Include="Vectoriales\uTestListaVectorCRUDV1.cs" />
+    <Compile Include="Vectoriales\uTestPilaVectorConstructoresV1.cs" />
+    <Compile Include="Vectoriales\uTestPilaVectorCRUDV1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -61,6 +79,7 @@
       <Name>libColecciones</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -9,9 +9,10 @@ namespace Servicios.Colecciones.Interfaces
     interface iLista<Tipo> where Tipo : IComparable
     {
         bool Agregar(Tipo prmItem);
-        bool Insertar(Tipo prmItem, int prmIndice);
-        bool Remover(ref Tipo prmItem, int prmIndice);
-        bool Modificar(ref Tipo prmItem, int prmIndice);
+        bool Insertar(int prmIndice, Tipo prmItem);
+        bool Remover(int prmIndice, ref Tipo prmItem);
+        bool Modificar(int prmIndice, Tipo prmItem);
         bool Revisar(ref Tipo prmItem);
+        bool Recuperar(int prmIndice, ref Tipo prmItem);
     }
 }
