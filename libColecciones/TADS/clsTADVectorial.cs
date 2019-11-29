@@ -96,6 +96,14 @@ namespace Servicios.Colecciones.TADS
             return false;
         }
         #endregion
+        #region Ordenamiento
+        protected override bool MetodoBurbujaSimple(bool prmOrdenDescendente) { return false; }
+        protected override bool MetodoBurbujaMejorado(bool prmOrdenDescendente) { return false; }
+        protected override bool MetodoBurbujaBiDireccional(bool prmOrdenDescendente) { return false; }
+        protected override bool MetodoSeleccion(bool prmOrdenDescendente) { return false; }
+        protected override bool MetodoQuickSort(bool prmOrdenDescendente) { return false; }
+        protected override bool MetodoInsercion(bool prmOrdenDescendente) { return false; }
+        #endregion
         #endregion
     }
 }

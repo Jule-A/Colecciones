@@ -8,17 +8,16 @@ namespace Servicios.Colecciones.TADS
         protected int atrLongitud;
         private bool atrEstaOrdenadaDescendente;
         private bool atrEstaOrdenadaAscendente;
-        private int atrNumeroComparaciones;
-        private int atrNumeroIntercambios;
-        private int atrNumeroInserciones;
-        private int atrNumeroLlamadosRecursivos;
-        private bool atrModoInteligente;
+        protected int atrNumeroComparaciones;
+        protected int atrNumeroIntercambios;
+        protected int atrNumeroInserciones;
+        protected int atrNumeroLlamadosRecursivos;
+        protected bool atrModoInteligente;
         #endregion
         #region Metodos
         #region Auxiliares
         protected bool EsValido(int prmIndice){ return prmIndice >= 0 && prmIndice < atrLongitud; }
         protected bool EstaVacia() { return atrLongitud == 0; }
-
         public int darLongitud() { return atrLongitud; }
         #endregion
         #region CRUDS - Query
