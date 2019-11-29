@@ -9,12 +9,6 @@ namespace Servicios.Colecciones.TADS
         private bool atrCapacidadFlexible = true;
         private int atrCapacidad;// = int.MaxValue/16;
         private int atrFactorDeCrecimiento = 1;
-        private bool atrOrdenDescendente = true;
-        private int atrNumeroComparaciones;
-        private int atrNumeroIntercambios;
-        private int atrNumeroInserciones;
-        private int atrNumeroLlamadosRecursivos;
-        private bool atrModoInteligente;
         #endregion
         #region Metodos
         #region Auxiliares
@@ -53,7 +47,10 @@ namespace Servicios.Colecciones.TADS
                     atrVectorDeItems[varIndice] = atrVectorDeItems[varIndice + 1];
             return true;
         }
-
+        public int darCapacidad() { return atrCapacidad; }
+        public Tipo[] darVectorItems() { return atrVectorDeItems; }
+        public bool darCapacidadFlexible() { return atrCapacidadFlexible; }
+        public int darFactorDeCrecimiento() { return atrFactorDeCrecimiento; }
         #endregion
         #region CRUDS - Query
         protected override bool InsertarEn(int prmIndice, Tipo prmItem)
@@ -98,30 +95,6 @@ namespace Servicios.Colecciones.TADS
             }
             return false;
         }
-        #endregion
-        #region Ordenamiento
-        public bool OrdenarBurbujaSimple(bool prmOrdenDescendente) { return false; }
-        public bool OrdenarBurbujaMejorado(bool prmOrdenDescendente) { return false; }
-        public bool OrdenarBurbujaBiDireccional(bool prmOrdenDescendente) { return false; }
-        public bool OrdenarSeleccion(bool prmOrdenDescendente) { return false; }
-        public bool OrdenarQuickSort(bool prmOrdenDescendente) { return false; }
-        public bool OrdenarInsercion(bool prmOrdenDescendente) { return false; }
-        #endregion
-        #region Accesores
-        public int darCapacidad() { return atrCapacidad; }
-        public Tipo[] darVectorItems() { return atrVectorDeItems; }
-        public bool darCapacidadFlexible() { return atrCapacidadFlexible; }
-        public int darFactorDeCrecimiento() { return atrFactorDeCrecimiento; }
-        public bool darEstaOrdenadaDescendente() { return atrOrdenDescendente == true; }
-        public bool darEstaOrdenadaAscendente() { return atrOrdenDescendente == false; }
-        public int darNumeroComparaciones() { return atrNumeroComparaciones; }
-        public int darNumeroIntercambios() { return atrNumeroIntercambios; }
-        public int darNumeroInserciones() { return atrNumeroInserciones; }
-        public int darNumeroLlamadosRecursivos() { return atrNumeroLlamadosRecursivos; }
-        #endregion
-        #region Mutadores
-        public bool AjustarOrdenColeccion(String prmNuevoOrden) { return false; }
-        public void ponerModoInteligente(bool prmModoInteligente) { atrModoInteligente = prmModoInteligente; }
         #endregion
         #endregion
     }

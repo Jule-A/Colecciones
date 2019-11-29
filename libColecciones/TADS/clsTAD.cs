@@ -6,6 +6,13 @@ namespace Servicios.Colecciones.TADS
     {
         #region Atributos
         protected int atrLongitud;
+        private bool atrEstaOrdenadaDescendente;
+        private bool atrEstaOrdenadaAscendente;
+        private int atrNumeroComparaciones;
+        private int atrNumeroIntercambios;
+        private int atrNumeroInserciones;
+        private int atrNumeroLlamadosRecursivos;
+        private bool atrModoInteligente;
         #endregion
         #region Metodos
         #region Auxiliares
@@ -21,6 +28,101 @@ namespace Servicios.Colecciones.TADS
         protected virtual bool RecuperarEn(int prmIndice, ref Tipo prmItem) { return false; }
         public bool Encontrar(Tipo prmItem, ref int prmIndice) { return false; }
         public bool Existe(Tipo prmItem) { return false; }
+        #endregion
+        #region Ordenamiento
+        protected bool Ordenar(string prmMetodoOrdenamiento, bool prmOrdenDescendente)
+        {
+            if (!EstaVacia() && DebeOrdenar(prmOrdenDescendente))
+            {
+                try
+                {
+                    switch (prmMetodoOrdenamiento)
+                    {
+                        case "Burbuja Simple": MetodoBurbujaSimple(prmOrdenDescendente); break;
+                        case "Burbuja Mejorado": MetodoBurbujaMejorado(prmOrdenDescendente); break;
+                        case "Burbuja BiDireccional": MetodoBurbujaBiDireccional(prmOrdenDescendente); break;
+                        case "Seleccion": MetodoSeleccion(prmOrdenDescendente); break;
+                        case "QuickSort": MetodoQuickSort(prmOrdenDescendente); break;
+                        case "Insercion": MetodoInsercion(prmOrdenDescendente); break;
+                        default: return false;
+                    }
+
+                    if (prmOrdenDescendente)
+                        AjustarOrdenColeccion("Descendente");
+                    else
+                        AjustarOrdenColeccion("Ascendente");
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
+            else
+                return false;
+        }
+        protected virtual bool MetodoBurbujaSimple(bool prmOrdenDescendente) { return false; }
+        protected virtual bool MetodoBurbujaMejorado(bool prmOrdenDescendente) { return false; }
+        protected virtual bool MetodoBurbujaBiDireccional(bool prmOrdenDescendente) { return false; }
+        protected virtual bool MetodoSeleccion(bool prmOrdenDescendente) { return false; }
+        protected virtual bool MetodoQuickSort(bool prmOrdenDescendente) { return false; }
+        protected virtual bool MetodoInsercion(bool prmOrdenDescendente) { return false; }
+        #region Auxiliares-Consultores
+        protected bool DebeOrdenar(bool prmOrdenDescendente)
+        {
+            switch (prmOrdenDescendente)
+            {
+                case true:
+                    if (atrEstaOrdenadaDescendente == true)
+                        return true;
+                    else
+                        return false;
+                case false:
+                    if (atrEstaOrdenadaAscendente == true)
+                        return false;
+                    else
+                        return true;
+            }
+            return false;
+        }
+        public bool AjustarOrdenColeccion(String prmCriterio)
+        {
+            switch (prmCriterio)
+            {
+                case "Ascendente":
+                    atrEstaOrdenadaAscendente = true; atrEstaOrdenadaDescendente = false;
+                    return true;
+                case "Descendente":
+                    atrEstaOrdenadaAscendente = false; atrEstaOrdenadaDescendente = true;
+                    return true;
+                case "Aleatorio":
+                    atrEstaOrdenadaAscendente = false; atrEstaOrdenadaDescendente = false;
+                    return true;
+                case "Constante":
+                    atrEstaOrdenadaAscendente = true; atrEstaOrdenadaDescendente = true;
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        public void ponerModoInteligente(bool prmModoInteligente) { atrModoInteligente = prmModoInteligente; }
+        #endregion
+        #region  Fachada
+        public bool OrdenarBurbujaSimple(bool prmOrdenDescendente) { return Ordenar("Burbuja Simple", prmOrdenDescendente); }
+        public bool OrdenarBurbujaMejorado(bool prmOrdenDescendente) { return Ordenar("Burbuja Mejorado", prmOrdenDescendente); }
+        public bool OrdenarBurbujaBiDireccional(bool prmOrdenDescendente) { return Ordenar("Burbuja BiDireccional", prmOrdenDescendente); }
+        public bool OrdenarSeleccion(bool prmOrdenDescendente) { return Ordenar("Seleccion", prmOrdenDescendente); }
+        public bool OrdenarQuickSort(bool prmOrdenDescendente) { return Ordenar("QuickSort", prmOrdenDescendente); }
+        public bool OrdenarInsercion(bool prmOrdenDescendente) { return Ordenar("Insercion", prmOrdenDescendente); }
+        #endregion
+        #region Accesores
+        public bool darEstaOrdenadaDescendente() { return atrEstaOrdenadaDescendente; }
+        public bool darEstaOrdenadaAscendente() { return atrEstaOrdenadaAscendente; ; }
+        public int darNumeroComparaciones() { return atrNumeroComparaciones; }
+        public int darNumeroIntercambios() { return atrNumeroIntercambios; }
+        public int darNumeroInserciones() { return atrNumeroInserciones; }
+        public int darNumeroLlamadosRecursivos() { return atrNumeroLlamadosRecursivos; }
+        #endregion
         #endregion
         #endregion
     }
