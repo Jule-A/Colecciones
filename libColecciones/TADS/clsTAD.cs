@@ -6,8 +6,8 @@ namespace Servicios.Colecciones.TADS
     {
         #region Atributos
         protected int atrLongitud;
-        private bool atrEstaOrdenadaDescendente;
-        private bool atrEstaOrdenadaAscendente;
+        protected bool atrEstaOrdenadaDescendente;
+        protected bool atrEstaOrdenadaAscendente;
         protected int atrNumeroComparaciones;
         protected int atrNumeroIntercambios;
         protected int atrNumeroInserciones;
@@ -84,7 +84,7 @@ namespace Servicios.Colecciones.TADS
             }
             return false;
         }
-        public bool AjustarOrdenColeccion(String prmCriterio)
+        public bool AjustarOrdenColeccion(string prmCriterio)
         {
             switch (prmCriterio)
             {

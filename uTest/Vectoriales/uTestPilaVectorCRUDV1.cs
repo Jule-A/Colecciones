@@ -73,7 +73,8 @@ namespace uTestColecciones
             #region Inicializar
             atrVectorDeItemsEsperado = new int[3];
             atrVectorDeItemsEsperado[0] = 2000;
-            atrVectorDeItemsEsperado[1] = 2000;
+            //atrVectorDeItemsEsperado[1] = 2000;
+            atrVectorDeItemsEsperado[1] = 0;
             atrVectorDeItemsEsperado[2] = 0;
 
             atrPila = new clsPilaVector<int>(3);
@@ -119,7 +120,8 @@ namespace uTestColecciones
             {
             #region Inicializar
             atrVectorDeItemsEsperado = new int[2];
-            atrVectorDeItemsEsperado[0] = 2000;
+            //atrVectorDeItemsEsperado[0] = 2000;
+            atrVectorDeItemsEsperado[0] = 0;
             atrVectorDeItemsEsperado[1] = 0;
             atrPila = new clsPilaVector<int>(2);
             atrPila.Apilar(2000);
