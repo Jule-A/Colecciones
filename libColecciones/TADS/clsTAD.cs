@@ -73,9 +73,9 @@ namespace Servicios.Colecciones.TADS
             {
                 case true:
                     if (atrEstaOrdenadaDescendente == true)
-                        return true;
-                    else
                         return false;
+                    else
+                        return true;
                 case false:
                     if (atrEstaOrdenadaAscendente == true)
                         return false;
