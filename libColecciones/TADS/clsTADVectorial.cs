@@ -171,9 +171,113 @@ namespace Servicios.Colecciones.TADS
         }
         #endregion
         #region Ordenamiento
-        protected override bool MetodoBurbujaSimple(bool prmOrdenDescendente) { return false; }
-        protected override bool MetodoBurbujaMejorado(bool prmOrdenDescendente) { return false; }
-        protected override bool MetodoBurbujaBiDireccional(bool prmOrdenDescendente) { return false; }
+        #region Auxiliares Ordenamiento
+        private void CambiarItemsDelVector(int prmPrimerIndice, int prmSegundoIndice)
+        {
+            Tipo varItemTemp = atrVectorDeItems[prmPrimerIndice];
+            atrVectorDeItems[prmPrimerIndice] = atrVectorDeItems[prmSegundoIndice];
+            atrVectorDeItems[prmSegundoIndice] = varItemTemp;
+            atrNumeroIntercambios++;
+        }
+        private bool CompararItems(bool prmOrdenDescendente, int prmPrimerIndice, int prmSegundoIndice)
+        {
+            atrNumeroComparaciones++;
+            if (prmOrdenDescendente)
+            {
+                if (atrVectorDeItems[prmPrimerIndice].CompareTo(atrVectorDeItems[prmSegundoIndice]) < 0)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                if (atrVectorDeItems[prmPrimerIndice].CompareTo(atrVectorDeItems[prmSegundoIndice]) > 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
+        #endregion
+        protected override bool MetodoBurbujaSimple(bool prmOrdenDescendente)
+        {
+            try
+            {
+                for (int i = 0; i < atrLongitud - 1; i++)
+                {
+                    for (int j = 0; j < atrLongitud - i - 1; j++)
+                    {
+                        if (CompararItems(prmOrdenDescendente, j, (j + 1)))
+                            CambiarItemsDelVector(j, (j + 1));
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        protected override bool MetodoBurbujaMejorado(bool prmOrdenDescendente)
+        {
+            try
+            {
+                bool varIntercambioRealizado;
+                for (int i = 0; i < atrLongitud - 1; i++)
+                {
+                    varIntercambioRealizado = false;
+                    for (int j = 0; j < atrLongitud - i - 1; j++)
+                    {
+                        if (CompararItems(prmOrdenDescendente, j, (j + 1)))
+                        {
+                            CambiarItemsDelVector(j, (j + 1));
+                            varIntercambioRealizado = true;
+                        }
+                    }
+                    if (!varIntercambioRealizado)
+                        return true;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        protected override bool MetodoBurbujaBiDireccional(bool prmOrdenDescendente)
+        {
+            try
+            {
+                bool varIntercambioRealizado = true;
+                while (varIntercambioRealizado)
+                {
+                    varIntercambioRealizado = false;
+                    for (int j = 0; j < atrLongitud - 1; j++)
+                    {
+                        if (CompararItems(prmOrdenDescendente, j, (j + 1)))
+                        {
+                            CambiarItemsDelVector(j, (j + 1));
+                            varIntercambioRealizado = true;
+                        }
+                    } 
+                    if (!varIntercambioRealizado)
+                        return true;
+                    varIntercambioRealizado = false;
+                    for (int j = atrLongitud - 2; j >= 0; j--)
+                    {
+                        if (CompararItems(prmOrdenDescendente, j, (j + 1)))
+                        {
+                            CambiarItemsDelVector(j, (j + 1));
+                            varIntercambioRealizado = true;
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
         protected override bool MetodoSeleccion(bool prmOrdenDescendente) { return false; }
         protected override bool MetodoQuickSort(bool prmOrdenDescendente) { return false; }
         protected override bool MetodoInsercion(bool prmOrdenDescendente) { return false; }
