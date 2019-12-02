@@ -8,10 +8,10 @@ namespace Servicios.Colecciones.Vectoriales
     {
         #region Métodos
         #region Constructores
-        public clsListaVector() { }
-        public clsListaVector(int prmCapacidad) { }
-        public clsListaVector(int prmCapacidad, int prmFactorDeCrecimiento) { }
-        public clsListaVector(bool prmCapacidadFlexible) { }
+        public clsListaVector() : base() { }
+        public clsListaVector(int prmCapacidad) : base(prmCapacidad) { }
+        public clsListaVector(int prmCapacidad, int prmFactorDeCrecimiento) : base(prmCapacidad, prmFactorDeCrecimiento) { }
+        public clsListaVector(bool prmCapacidadFlexible) : base(prmCapacidadFlexible) { }
         #endregion
         #region CRUDS
         public bool Agregar(Tipo prmItem)
@@ -24,18 +24,17 @@ namespace Servicios.Colecciones.Vectoriales
         }
         public bool Modificar(int prmIndice, Tipo prmItem)
         {
-            throw new NotImplementedException();
+            return ModificarEn(prmIndice,prmItem);
         }
         public bool Remover(int prmIndice, ref Tipo prmItem)
         {
             return ExtraerEn(prmIndice, ref prmItem);
         }
-        public bool Revisar(ref Tipo prmItem)
+        public bool Recuperar(int prmIndice, ref Tipo prmItem)
         {
-            throw new NotImplementedException();
+            return RecuperarEn(prmIndice, ref prmItem);
         }
-        public bool Recuperar(int prmIndice, ref Tipo prmItem) { return false; }
-        public bool Reversar() { return false; }
+        public bool Reversar() { return ReversarVector(); }
         #endregion
         #endregion
     }

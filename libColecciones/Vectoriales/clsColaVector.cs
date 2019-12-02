@@ -7,10 +7,10 @@ namespace Servicios.Colecciones.Vectoriales
     public class clsColaVector<Tipo> : clsTADVectorial<Tipo>, iCola<Tipo> where Tipo : IComparable
     {
         #region Constructores
-        public clsColaVector() { }
-        public clsColaVector(int prmCapacidad) { }
-        public clsColaVector(int prmCapacidad, int prmFactorDeCrecimiento) { }
-        public clsColaVector(bool prmCapacidadFlexible) { }
+        public clsColaVector() : base() { }
+        public clsColaVector(int prmCapacidad) : base(prmCapacidad) { }
+        public clsColaVector(int prmCapacidad, int prmFactorDeCrecimiento) : base(prmCapacidad, prmFactorDeCrecimiento) { }
+        public clsColaVector(bool prmCapacidadFlexible) : base(prmCapacidadFlexible) { }
         #endregion
         #region Métodos
         public bool Encolar(Tipo prmItem) {return InsertarEn(atrLongitud, prmItem);}
