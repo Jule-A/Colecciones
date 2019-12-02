@@ -8,28 +8,12 @@ namespace Servicios.Colecciones.SimpleEnlazadas
     {
         #region Métodos
         #region CRUDS
-        public bool Agregar(Tipo prmItem)
-        {
-            throw new NotImplementedException();
-        }
-        public bool Insertar(int prmIndice, Tipo prmItem)
-        {
-            throw new NotImplementedException();
-        }
-        public bool Modificar(int prmIndice, Tipo prmItem)
-        {
-            throw new NotImplementedException();
-        }
-        public bool Remover(int prmIndice, ref Tipo prmItem)
-        {
-            throw new NotImplementedException();
-        }
-        public bool Revisar(ref Tipo prmItem)
-        {
-            throw new NotImplementedException();
-        }
-        public bool Recuperar(int prmIndice, ref Tipo prmItem) { return false; }
-        public bool Reversar() { return false; }
+        public bool Agregar(Tipo prmItem){ return InsertarEn(atrLongitud, prmItem); }
+        public bool Insertar(int prmIndice, Tipo prmItem){ return InsertarEn(prmIndice, prmItem); }
+        public bool Modificar(int prmIndice, Tipo prmItem){ return ModificarEn(prmIndice, prmItem); }
+        public bool Remover(int prmIndice, ref Tipo prmItem){ return ExtraerEn(prmIndice, ref prmItem); }
+        public bool Recuperar(int prmIndice, ref Tipo prmItem) { return RecuperarEn(prmIndice, ref prmItem); }
+        public bool Reversar() { return ReversarNodos(); }
         #endregion
         #endregion
     }

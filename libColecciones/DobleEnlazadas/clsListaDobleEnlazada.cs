@@ -24,10 +24,6 @@ namespace Servicios.Colecciones.DobleEnlazadas
         {
             throw new NotImplementedException();
         }
-        public bool Revisar(ref Tipo prmItem)
-        {
-            throw new NotImplementedException();
-        }
         public bool Recuperar(int prmIndice, ref Tipo prmItem) { return false; }
         public bool Reversar() { return false; }
         #endregion

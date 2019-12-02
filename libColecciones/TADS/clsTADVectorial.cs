@@ -95,7 +95,7 @@ namespace Servicios.Colecciones.TADS
             {
                 Tipo[] varVectorAuxiliar = new Tipo[atrCapacidad + atrFactorDeCrecimiento];
                 int varIndice2 = 0;
-                for (int varIndice1 = 0; varIndice1 < atrCapacidad; varIndice1++)
+                for (int varIndice1 = 0; varIndice1 <= atrLongitud; varIndice1++)
                 {
                     if (varIndice1 != prmIndice)
                     {
@@ -115,11 +115,32 @@ namespace Servicios.Colecciones.TADS
             }
             if (!prmHaciaDerecha)
             {
-                for (int varIndice = prmIndice; varIndice < atrLongitud; varIndice++)
+                for (int varIndice = prmIndice; varIndice < atrLongitud-1; varIndice++)
                     atrVectorDeItems[varIndice] = atrVectorDeItems[varIndice + 1];
                 return true;
             }
             return false;
+        }
+        protected bool ReversarVector()
+        {
+            try
+            {
+                if (!EstaVacia())
+                {
+                    Tipo[] varVectorAuxiliar = new Tipo[atrCapacidad];
+                    int varIndice2 = atrLongitud - 1;
+                    for(int varIndice1 = 0; varIndice1 < atrLongitud; varIndice1++)
+                    {
+                        varVectorAuxiliar[varIndice1] = atrVectorDeItems[varIndice2];
+                        varIndice2--;
+                    }
+                    atrVectorDeItems = varVectorAuxiliar;
+                }
+                return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
         }
         public int darCapacidad() { return atrCapacidad; }
         public Tipo[] darVectorItems() { return atrVectorDeItems; }
@@ -134,7 +155,7 @@ namespace Servicios.Colecciones.TADS
                 if (EstaVacia() || DesplazarItems(true, prmIndice))
                 {
                     atrVectorDeItems[prmIndice] = prmItem;
-                    atrLongitud += 1;
+                    atrLongitud++;
                     return true;
                 }
             }

@@ -61,9 +61,10 @@ namespace uTestColecciones
             #region Comprobar
             Assert.AreEqual(true, varResultadoEncolar);
             Assert.AreEqual(1, atrCola.darLongitud());
-            Assert.AreEqual(1, atrCola.darCapacidad());
-            Assert.AreEqual(atrCola.darLongitud(), atrCola.darCapacidad());
-            Assert.AreEqual(1, atrCola.darVectorItems().Length);
+            //Assert.AreEqual(1, atrCola.darCapacidad());
+            Assert.AreEqual(100, atrCola.darCapacidad());
+            //Assert.AreEqual(atrCola.darLongitud(), atrCola.darCapacidad());
+            //Assert.AreEqual(1, atrCola.darVectorItems().Length);
             Assert.AreEqual(1973, atrCola.darVectorItems()[0]);
             #endregion
             }

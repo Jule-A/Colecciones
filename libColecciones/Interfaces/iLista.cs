@@ -12,7 +12,6 @@ namespace Servicios.Colecciones.Interfaces
         bool Insertar(int prmIndice, Tipo prmItem);
         bool Remover(int prmIndice, ref Tipo prmItem);
         bool Modificar(int prmIndice, Tipo prmItem);
-        bool Revisar(ref Tipo prmItem);
         bool Recuperar(int prmIndice, ref Tipo prmItem);
     }
 }
