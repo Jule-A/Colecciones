@@ -24,12 +24,7 @@ namespace Servicios.Colecciones.TADS
                     varNodoActual = atrNodoPrimero;
                     for (int varIndice2 = 1; varIndice2 < atrLongitud - varIndice1; varIndice2++)
                         varNodoActual = varNodoActual.darSiguiente();
-                    if (varIndice1 == 0)
-                    {
-                        varNodoNuevo.ponerSiguiente(varNodoActual);
-                        varNodoAuxiliar = varNodoNuevo.darSiguiente();
-                    }
-                    else if(varIndice1 == atrLongitud - 1)
+                    if(varIndice1 == atrLongitud - 1)
                     {
                         varNodoAuxiliar.ponerSiguiente(null);
                         atrNodoUltimo = atrNodoPrimero;
@@ -46,7 +41,6 @@ namespace Servicios.Colecciones.TADS
             }
             return false;
         }
-
         #endregion
         #region CRUDS
         protected override bool InsertarEn(int prmIndice, Tipo prmItem)
@@ -135,7 +129,7 @@ namespace Servicios.Colecciones.TADS
                     atrNodoPrimero.ponerItem(prmItem);
                     return true;
                 }
-                else if (prmIndice == atrLongitud)
+                else if (prmIndice == atrLongitud-1)
                 {
                     atrNodoUltimo.ponerItem(prmItem);
                     return true;
@@ -173,6 +167,38 @@ namespace Servicios.Colecciones.TADS
         #region Accesores
         public clsNodoSimpleEnlazado<Tipo> darNodoPrimero() { return atrNodoPrimero; }
         public clsNodoSimpleEnlazado<Tipo> darNodoUltimo() { return atrNodoUltimo; }
+        #endregion
+        #region Iterador
+        protected clsNodoSimpleEnlazado<Tipo> atrNodoActual;
+        protected override Tipo DarItemActual(){ return atrNodoActual.darItem(); }
+        protected override bool IrIndice(int prmIndice)
+        {
+            if(prmIndice == 0)
+            {
+                atrIndiceActual = atrLongitud - 1;
+                atrNodoActual = atrNodoPrimero;
+                atrItemActual = DarItemActual();
+                atrIndiceActual = 0;
+                return true;
+            }
+            if(prmIndice == atrLongitud-1)
+            {
+                atrIndiceActual = atrLongitud - 1;
+                atrNodoActual = atrNodoUltimo;
+                atrItemActual = DarItemActual();
+                atrIndiceActual = atrLongitud - 1;
+                return true;
+            }
+            if (EsValido(prmIndice) && prmIndice < atrLongitud - 1)
+            {
+                atrNodoActual = atrNodoPrimero;
+                for (atrIndiceActual = 1; atrIndiceActual < prmIndice; atrIndiceActual++)
+                    atrNodoActual = atrNodoActual.darSiguiente();
+                atrItemActual = DarItemActual();
+                return true;
+            }
+            return false;
+        }
         #endregion
         #endregion
     }

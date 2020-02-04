@@ -122,6 +122,57 @@ namespace Servicios.Colecciones.TADS
         public int darNumeroInserciones() { return atrNumeroInserciones; }
         public int darNumeroLlamadosRecursivos() { return atrNumeroLlamadosRecursivos; }
         #endregion
+        #endregion}
+        #region Iterador
+        #region Atributos
+        protected int atrIndiceActual;
+        protected Tipo atrItemActual;
+        #region Métodos
+        protected virtual bool IrIndice(int prmIndice) { return false; }
+        protected bool IrPrimero()
+        {
+            if (!EstaVacia())
+            {
+                IrIndice(0);
+                return true;
+            }
+            return false;
+        }
+        protected bool IrUltimo()
+        {
+            if (!EstaVacia())
+            {
+                IrIndice(atrLongitud-1);
+                return true;
+            }
+            return false;
+        }
+        protected bool IrAnterior()
+        {
+            if (ExisteAnterior())
+            {
+                atrIndiceActual--;
+                atrItemActual = DarItemActual();
+                return true;
+            }
+            return false;
+        }
+        protected bool IrSiguiente()
+        {
+            if (ExisteSiguiente())
+            {
+                atrIndiceActual++;
+                atrItemActual = DarItemActual();
+                return true;
+            }
+            return false;
+        }
+        protected bool ExisteAnterior() { return atrIndiceActual > 0; }
+        protected bool ExisteSiguiente() { return atrIndiceActual < atrLongitud; }
+        protected virtual Tipo DarItemActual() { return default(Tipo); }
+
+        #endregion
+        #endregion
         #endregion
         #endregion
     }

@@ -303,6 +303,19 @@ namespace Servicios.Colecciones.TADS
         protected override bool MetodoQuickSort(bool prmOrdenDescendente) { return false; }
         protected override bool MetodoInsercion(bool prmOrdenDescendente) { return false; }
         #endregion
+        #region Iterador
+        protected override Tipo DarItemActual() { return atrVectorDeItems[atrIndiceActual]; }
+        protected override bool IrIndice(int prmIndice)
+        {
+            if (EsValido(prmIndice))
+            {
+                atrIndiceActual = prmIndice;
+                atrItemActual = DarItemActual();
+                return true;
+            }
+            return false;
+        }
+        #endregion
         #endregion
     }
 }

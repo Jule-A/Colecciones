@@ -8,18 +8,9 @@ namespace Servicios.Colecciones.DobleEnlazadas
     {
         #region Métodos
         #region CRUDS
-        public bool Encolar(Tipo prmItem)
-        {
-            throw new NotImplementedException();
-        }
-        public bool Desencolar(ref Tipo prmItem)
-        {
-            throw new NotImplementedException();
-        }
-        public bool Revisar(ref Tipo prmItem)
-        {
-            throw new NotImplementedException();
-        }
+        public bool Encolar(Tipo prmItem) { return InsertarEn(atrLongitud, prmItem); }
+        public bool Desencolar(ref Tipo prmItem) { return ExtraerEn(0, ref prmItem); }
+        public bool Revisar(ref Tipo prmItem) { return RecuperarEn(0, ref prmItem); }
         #endregion
         #endregion
     }
