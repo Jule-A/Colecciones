@@ -127,6 +127,7 @@ namespace Servicios.Colecciones.TADS
         #region Atributos
         protected int atrIndiceActual;
         protected Tipo atrItemActual;
+        #endregion
         #region Métodos
         protected virtual bool IrIndice(int prmIndice) { return false; }
         protected bool IrPrimero()
@@ -142,36 +143,32 @@ namespace Servicios.Colecciones.TADS
         {
             if (!EstaVacia())
             {
-                IrIndice(atrLongitud-1);
+                IrIndice(atrLongitud - 1);
                 return true;
             }
             return false;
         }
         protected bool IrAnterior()
         {
-            if (ExisteAnterior())
+            if (!EstaVacia() && ExisteAnterior())
             {
-                atrIndiceActual--;
-                atrItemActual = DarItemActual();
+                IrIndice(atrIndiceActual--);
                 return true;
             }
             return false;
         }
         protected bool IrSiguiente()
         {
-            if (ExisteSiguiente())
+            if (!EstaVacia() && ExisteSiguiente())
             {
-                atrIndiceActual++;
-                atrItemActual = DarItemActual();
+                IrIndice(atrIndi-ceActual++);
                 return true;
             }
             return false;
         }
         protected bool ExisteAnterior() { return atrIndiceActual > 0; }
         protected bool ExisteSiguiente() { return atrIndiceActual < atrLongitud; }
-        protected virtual Tipo DarItemActual() { return default(Tipo); }
 
-        #endregion
         #endregion
         #endregion
         #endregion

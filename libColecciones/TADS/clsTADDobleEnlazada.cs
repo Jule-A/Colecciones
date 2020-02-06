@@ -58,9 +58,19 @@ namespace Servicios.Colecciones.TADS
             }
             if (EsValido(prmIndice))
             {
-                clsNodoDobleEnlazado<Tipo> varNodoActual = atrNodoPrimero;
-                for (int varIndice = 1; varIndice < prmIndice; varIndice++)
-                    varNodoActual = varNodoActual.darSiguiente();
+                clsNodoDobleEnlazado<Tipo> varNodoActual = new clsNodoDobleEnlazado<Tipo>(default);
+                if (prmIndice > 0 && prmIndice < atrLongitud / 2)
+                {
+                    varNodoActual = atrNodoPrimero;
+                    for (int varIndice = 1; varIndice < prmIndice; varIndice++)
+                        varNodoActual = varNodoActual.darSiguiente();
+                }
+                if (prmIndice >= atrLongitud / 2 && prmIndice < atrLongitud - 1)
+                {
+                    varNodoActual = atrNodoUltimo;
+                    for (int varIndice = atrLongitud - 2; varIndice >= prmIndice; varIndice--)
+                        varNodoActual = varNodoActual.darAnterior();
+                }
                 varNodoNuevo.ponerSiguiente(varNodoActual);
                 varNodoNuevo.ponerAnterior(varNodoActual.darAnterior());
                 varNodoActual.darAnterior().ponerSiguiente(varNodoNuevo);
@@ -73,23 +83,20 @@ namespace Servicios.Colecciones.TADS
         protected override bool ExtraerEn(int prmIndice, ref Tipo prmItem)
         {
             clsNodoDobleEnlazado<Tipo> varNodoNuevo;
-            if (!EstaVacia() && EsValido(prmIndice))
+            if (IrIndice(prmIndice))
             {
+                prmItem = atrItemActual;
                 if (atrLongitud - 1 == 0)
                 {
-                    prmItem = atrNodoPrimero.darItem();
                     atrNodoPrimero = null;
                     atrNodoUltimo = null;
-                    atrLongitud--;
                     return true;
                 }
                 if (prmIndice == 0)
                 {
-                    prmItem = atrNodoPrimero.darItem();
-                    varNodoNuevo = atrNodoPrimero.darSiguiente();
+                    varNodoNuevo = atrNodoActual.darSiguiente();
                     varNodoNuevo.ponerAnterior(null);
-                    atrNodoPrimero = varNodoNuevo;
-                    atrLongitud--;
+                    atrNodoActual = varNodoNuevo;
                     return true;
                 }
                 clsNodoDobleEnlazado<Tipo> varNodoActual = atrNodoPrimero;
@@ -115,46 +122,17 @@ namespace Servicios.Colecciones.TADS
         }
         protected override bool ModificarEn(int prmIndice, Tipo prmItem)
         {
-            if (!EstaVacia() && EsValido(prmIndice))
+            if (!EstaVacia() && IrIndice(prmIndice))
             {
-                if (prmIndice == 0)
-                {
-                    atrNodoPrimero.ponerItem(prmItem);
-                    return true;
-                }
-                else if (prmIndice == atrLongitud-1)
-                {
-                    atrNodoUltimo.ponerItem(prmItem);
-                    return true;
-                }
-                clsNodoDobleEnlazado<Tipo> varNodoActual = atrNodoPrimero;
-                for (int varIndice = 1; varIndice <= prmIndice; varIndice++)
-                    varNodoActual = varNodoActual.darSiguiente();
-                varNodoActual.ponerItem(prmItem);
+                atrNodoActual.ponerItem(prmItem);
                 return true;
             }
             return false;
         }
         protected override bool RecuperarEn(int prmIndice, ref Tipo prmItem)
         {
-            if (!EstaVacia() && EsValido(prmIndice))
-            {
-                if (prmIndice == 0)
-                {
-                    prmItem = atrNodoPrimero.darItem();
-                    return true;
-                }
-                else if (prmIndice == atrLongitud - 1)
-                {
-                    prmItem = atrNodoUltimo.darItem();
-                    return true;
-                }
-                clsNodoDobleEnlazado<Tipo> varNodoActual = atrNodoPrimero;
-                for (int varIndice = 1; varIndice <= prmIndice; varIndice++)
-                    varNodoActual = varNodoActual.darSiguiente();
-                prmItem = varNodoActual.darItem();
-                return true;
-            }
+            if (!EstaVacia())
+                return IrIndice(prmIndice);
             return false;
         }
         #endregion
@@ -164,32 +142,40 @@ namespace Servicios.Colecciones.TADS
         #endregion
         #region Iterador
         protected clsNodoDobleEnlazado<Tipo> atrNodoActual;
-        protected override Tipo DarItemActual() { return atrNodoActual.darItem(); }
         protected override bool IrIndice(int prmIndice)
         {
+            atrNodoActual = new clsNodoDobleEnlazado<Tipo>(default);
             if (prmIndice == 0)
             {
-                atrIndiceActual = atrLongitud - 1;
-                atrNodoActual = atrNodoPrimero;
-                atrItemActual = DarItemActual();
                 atrIndiceActual = 0;
+                atrNodoActual = atrNodoPrimero;
+                atrItemActual = atrNodoActual.darItem();
                 return true;
             }
             if (prmIndice == atrLongitud - 1)
             {
                 atrIndiceActual = atrLongitud - 1;
                 atrNodoActual = atrNodoUltimo;
-                atrItemActual = DarItemActual();
-                atrIndiceActual = atrLongitud - 1;
+                atrItemActual = atrNodoActual.darItem();
                 return true;
             }
             if (EsValido(prmIndice))
             {
-                atrNodoActual = atrNodoPrimero;
-                for (atrIndiceActual = 1; atrIndiceActual < prmIndice; atrIndiceActual++)
-                    atrNodoActual = atrNodoActual.darSiguiente();
-                atrItemActual = DarItemActual();
-                return true;
+                if(prmIndice > 0 && prmIndice < atrLongitud / 2)
+                {
+                    atrNodoActual = atrNodoPrimero;
+                    for (atrIndiceActual = 1; atrIndiceActual < prmIndice; atrIndiceActual++)
+                        atrNodoActual = atrNodoActual.darSiguiente();
+                    return true;
+                }
+                if (prmIndice >= atrLongitud / 2 && prmIndice < atrLongitud - 1)
+                {
+                    atrNodoActual = atrNodoUltimo;
+                    for (atrIndiceActual = atrLongitud - 2; atrIndiceActual >= prmIndice; atrIndiceActual--)
+                        atrNodoActual = atrNodoActual.darAnterior();
+                    return true;
+                }
+                atrItemActual = atrNodoActual.darItem();
             }
             return false;
         }

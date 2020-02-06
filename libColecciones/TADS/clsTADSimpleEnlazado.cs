@@ -169,32 +169,29 @@ namespace Servicios.Colecciones.TADS
         public clsNodoSimpleEnlazado<Tipo> darNodoUltimo() { return atrNodoUltimo; }
         #endregion
         #region Iterador
-        protected clsNodoSimpleEnlazado<Tipo> atrNodoActual;
-        protected override Tipo DarItemActual(){ return atrNodoActual.darItem(); }
         protected override bool IrIndice(int prmIndice)
         {
-            if(prmIndice == 0)
+            clsNodoSimpleEnlazado<Tipo> varNodoActual;
+            if (prmIndice == 0)
             {
-                atrIndiceActual = atrLongitud - 1;
-                atrNodoActual = atrNodoPrimero;
-                atrItemActual = DarItemActual();
                 atrIndiceActual = 0;
+                varNodoActual = atrNodoPrimero;
+                atrItemActual = varNodoActual.darItem();
                 return true;
             }
             if(prmIndice == atrLongitud-1)
             {
                 atrIndiceActual = atrLongitud - 1;
-                atrNodoActual = atrNodoUltimo;
-                atrItemActual = DarItemActual();
-                atrIndiceActual = atrLongitud - 1;
+                varNodoActual = atrNodoUltimo;
+                atrItemActual = varNodoActual.darItem();
                 return true;
             }
-            if (EsValido(prmIndice) && prmIndice < atrLongitud - 1)
+            if (EsValido(prmIndice))
             {
-                atrNodoActual = atrNodoPrimero;
+                varNodoActual = atrNodoPrimero;
                 for (atrIndiceActual = 1; atrIndiceActual < prmIndice; atrIndiceActual++)
-                    atrNodoActual = atrNodoActual.darSiguiente();
-                atrItemActual = DarItemActual();
+                    varNodoActual = varNodoActual.darSiguiente();
+                atrItemActual = varNodoActual.darItem();
                 return true;
             }
             return false;
