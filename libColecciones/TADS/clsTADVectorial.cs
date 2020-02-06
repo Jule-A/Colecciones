@@ -172,24 +172,6 @@ namespace Servicios.Colecciones.TADS
             }
             return false;
         }
-        protected override bool ModificarEn(int prmIndice, Tipo prmItem)
-        {
-            if (EsValido(prmIndice))
-            {
-                atrVectorDeItems[prmIndice] = prmItem;
-                return true;
-            }
-            return false;
-        }
-        protected override bool RecuperarEn(int prmIndice, ref Tipo prmItem)
-        {
-            if (EsValido(prmIndice))
-            {
-                prmItem = atrVectorDeItems[prmIndice];
-                return true;
-            }
-            return false;
-        }
         #endregion
         #region Ordenamiento
         #region Auxiliares Ordenamiento
@@ -306,7 +288,7 @@ namespace Servicios.Colecciones.TADS
         #region Iterador
         protected override bool IrIndice(int prmIndice)
         {
-            if (EsValido(prmIndice))
+            if (!EstaVacia() && EsValido(prmIndice))
             {
                 atrIndiceActual = prmIndice;
                 atrItemActual = atrVectorDeItems[atrIndiceActual];
@@ -314,6 +296,7 @@ namespace Servicios.Colecciones.TADS
             }
             return false;
         }
+        protected override void PonerItemActual(){atrVectorDeItems[atrIndiceActual] = atrItemActual;}
         #endregion
         #endregion
     }

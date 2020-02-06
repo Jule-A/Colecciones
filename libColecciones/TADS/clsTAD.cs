@@ -23,8 +23,25 @@ namespace Servicios.Colecciones.TADS
         #region CRUDS - Query
         protected virtual bool InsertarEn(int prmIndice, Tipo prmItem) { return false; }
         protected virtual bool ExtraerEn(int prmIndice, ref Tipo prmItem) { return false; }
-        protected virtual bool ModificarEn(int prmIndice, Tipo prmItem) { return false; }
-        protected virtual bool RecuperarEn(int prmIndice, ref Tipo prmItem) { return false; }
+        protected bool ModificarEn(int prmIndice, Tipo prmItem)
+        {
+            if (IrIndice(prmIndice))
+            {
+                atrItemActual = prmItem;
+                PonerItemActual();
+                return true;
+            }
+            return false;
+        }
+        protected bool RecuperarEn(int prmIndice, ref Tipo prmItem)
+        {
+            if (IrIndice(prmIndice))
+            {
+                prmItem = atrItemActual;
+                return true;
+            }
+            return false;
+        }
         public bool Encontrar(Tipo prmItem, ref int prmIndice) { return false; }
         public bool Existe(Tipo prmItem) { return false; }
         #endregion
@@ -130,44 +147,29 @@ namespace Servicios.Colecciones.TADS
         #endregion
         #region Métodos
         protected virtual bool IrIndice(int prmIndice) { return false; }
+        protected virtual void PonerItemActual() { }
         protected bool IrPrimero()
         {
-            if (!EstaVacia())
-            {
-                IrIndice(0);
-                return true;
-            }
-            return false;
+            return IrIndice(0);
         }
         protected bool IrUltimo()
         {
-            if (!EstaVacia())
-            {
-                IrIndice(atrLongitud - 1);
-                return true;
-            }
-            return false;
+            return IrIndice(atrLongitud - 1);
         }
         protected bool IrAnterior()
         {
-            if (!EstaVacia() && ExisteAnterior())
-            {
-                IrIndice(atrIndiceActual--);
-                return true;
-            }
+            if (ExisteAnterior())
+                return IrIndice(atrIndiceActual-1);
             return false;
         }
         protected bool IrSiguiente()
         {
-            if (!EstaVacia() && ExisteSiguiente())
-            {
-                IrIndice(atrIndi-ceActual++);
-                return true;
-            }
+            if (ExisteSiguiente())
+                return IrIndice(atrIndiceActual+1);
             return false;
         }
-        protected bool ExisteAnterior() { return atrIndiceActual > 0; }
-        protected bool ExisteSiguiente() { return atrIndiceActual < atrLongitud; }
+        protected bool ExisteAnterior() { return !EstaVacia() && atrIndiceActual > 0; }
+        protected bool ExisteSiguiente() { return !EstaVacia() && atrIndiceActual < atrLongitud; }
 
         #endregion
         #endregion
