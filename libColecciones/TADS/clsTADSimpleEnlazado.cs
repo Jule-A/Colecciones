@@ -128,13 +128,6 @@ namespace Servicios.Colecciones.TADS
         {
             if (!EstaVacia())
             {
-                if (prmIndice == 0)
-                {
-                    atrIndiceActual = 0;
-                    atrNodoActual = atrNodoPrimero;
-                    atrItemActual = atrNodoActual.darItem();
-                    return true;
-                }
                 if (prmIndice == atrLongitud - 1)
                 {
                     atrIndiceActual = atrLongitud - 1;
@@ -145,7 +138,7 @@ namespace Servicios.Colecciones.TADS
                 if (EsValido(prmIndice))
                 {
                     atrNodoActual = atrNodoPrimero;
-                    for (atrIndiceActual = 1; atrIndiceActual < prmIndice; atrIndiceActual++)
+                    for (atrIndiceActual = 0; atrIndiceActual < prmIndice-1; atrIndiceActual++)
                         atrNodoActual = atrNodoActual.darSiguiente();
                     atrItemActual = atrNodoActual.darItem();
                     return true;

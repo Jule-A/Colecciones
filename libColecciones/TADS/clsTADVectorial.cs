@@ -85,10 +85,7 @@ namespace Servicios.Colecciones.TADS
                 }
             }
         }
-        public bool estaLlena()
-        {
-            return atrCapacidad == atrLongitud;
-        }
+        public bool estaLlena() { return atrCapacidad == atrLongitud; }
         private bool DesplazarItems(bool prmHaciaDerecha, int prmIndice)
         {
             if (estaLlena() && prmHaciaDerecha && atrCapacidadFlexible)
@@ -121,43 +118,29 @@ namespace Servicios.Colecciones.TADS
             }
             return false;
         }
-        protected bool ReversarVector()
+        protected bool AbrirEspacioNuevo(int prmIndice)
         {
-            try
-            {
-                if (!EstaVacia())
-                {
-                    Tipo[] varVectorAuxiliar = new Tipo[atrCapacidad];
-                    int varIndice2 = atrLongitud - 1;
-                    for(int varIndice1 = 0; varIndice1 < atrLongitud; varIndice1++)
-                    {
-                        varVectorAuxiliar[varIndice1] = atrVectorDeItems[varIndice2];
-                        varIndice2--;
-                    }
-                    atrVectorDeItems = varVectorAuxiliar;
-                }
+            if (prmIndice == atrLongitud && atrLongitud < atrCapacidad)
                 return true;
-            }catch(Exception e)
-            {
-                return false;
-            }
+            if (EsValido(prmIndice) || prmIndice == atrLongitud)
+                return DesplazarItems(true, prmIndice);
+            return false;
         }
-        public int darCapacidad() { return atrCapacidad; }
-        public Tipo[] darVectorItems() { return atrVectorDeItems; }
-        public bool darCapacidadFlexible() { return atrCapacidadFlexible; }
-        public int darFactorDeCrecimiento() { return atrFactorDeCrecimiento; }
         #endregion
         #region CRUDS - Query
         protected override bool InsertarEn(int prmIndice, Tipo prmItem)
         {
-            if (EsValido(prmIndice) || prmIndice==atrLongitud)
+            if (prmIndice==atrLongitud && atrLongitud < atrCapacidad)
             {
-                if (EstaVacia() || DesplazarItems(true, prmIndice))
-                {
-                    atrVectorDeItems[prmIndice] = prmItem;
-                    atrLongitud++;
-                    return true;
-                }
+                atrVectorDeItems[prmIndice] = prmItem;
+                atrLongitud++;
+                return true;
+            }
+            if ((EsValido(prmIndice) || prmIndice==atrLongitud) && (DesplazarItems(true, prmIndice)))
+            {
+                atrVectorDeItems[prmIndice] = prmItem;
+                atrLongitud++;
+                return true;
             }
             return false;
         }
@@ -172,6 +155,12 @@ namespace Servicios.Colecciones.TADS
             }
             return false;
         }
+        #endregion
+        #region Accesores
+        public int darCapacidad() { return atrCapacidad; }
+        public Tipo[] darVectorItems() { return atrVectorDeItems; }
+        public bool darCapacidadFlexible() { return atrCapacidadFlexible; }
+        public int darFactorDeCrecimiento() { return atrFactorDeCrecimiento; }
         #endregion
         #region Ordenamiento
         #region Auxiliares Ordenamiento
@@ -284,6 +273,28 @@ namespace Servicios.Colecciones.TADS
         protected override bool MetodoSeleccion(bool prmOrdenDescendente) { return false; }
         protected override bool MetodoQuickSort(bool prmOrdenDescendente) { return false; }
         protected override bool MetodoInsercion(bool prmOrdenDescendente) { return false; }
+        protected bool ReversarVector()
+        {
+            try
+            {
+                if (!EstaVacia())
+                {
+                    Tipo[] varVectorAuxiliar = new Tipo[atrCapacidad];
+                    int varIndice2 = atrLongitud - 1;
+                    for (int varIndice1 = 0; varIndice1 < atrLongitud; varIndice1++)
+                    {
+                        varVectorAuxiliar[varIndice1] = atrVectorDeItems[varIndice2];
+                        varIndice2--;
+                    }
+                    atrVectorDeItems = varVectorAuxiliar;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
         #endregion
         #region Iterador
         protected override bool IrIndice(int prmIndice)
