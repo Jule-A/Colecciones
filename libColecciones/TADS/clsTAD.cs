@@ -148,28 +148,12 @@ namespace Servicios.Colecciones.TADS
         #region Métodos
         protected virtual bool IrIndice(int prmIndice) { return false; }
         protected virtual void PonerItemActual() { }
-        //protected bool IrPrimero()
-        //{
-        //    return IrIndice(0);
-        //}
-        //protected bool IrUltimo()
-        //{
-        //    return IrIndice(atrLongitud - 1);
-        //}
-        //protected bool IrAnterior()
-        //{
-        //    if (ExisteAnterior())
-        //        return IrIndice(atrIndiceActual-1);
-        //    return false;
-        //}
-        //protected bool IrSiguiente()
-        //{
-        //    if (ExisteSiguiente())
-        //        return IrIndice(atrIndiceActual+1);
-        //    return false;
-        //}
-        //protected bool ExisteAnterior() { return !EstaVacia() && atrIndiceActual > 0; }
-        //protected bool ExisteSiguiente() { return !EstaVacia() && atrIndiceActual < atrLongitud; }
+        protected virtual bool IrPrimero() { return false; }
+        protected virtual bool IrUltimo() { return false; }
+        protected virtual bool IrAnterior() { return false; }
+        protected virtual bool IrSiguiente() { return false; }
+        protected bool ExisteAnterior() { return !EstaVacia() && atrIndiceActual > 0; }
+        protected bool ExisteSiguiente() { return !EstaVacia() && atrIndiceActual < atrLongitud; }
 
         #endregion
         #endregion

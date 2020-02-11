@@ -116,23 +116,63 @@ namespace Servicios.Colecciones.TADS
         protected clsNodoDobleEnlazado<Tipo> atrNodoActual;
         protected override bool IrIndice(int prmIndice)
         {
-            atrNodoActual = new clsNodoDobleEnlazado<Tipo>(default);
             if (EsValido(prmIndice))
             {
                 if (prmIndice >= 0 && prmIndice < atrLongitud / 2)
                 {
-                    atrNodoActual = atrNodoPrimero;
-                    for (atrIndiceActual = 0; atrIndiceActual < prmIndice-1; atrIndiceActual++)
-                        atrNodoActual = atrNodoActual.darSiguiente();
+                    IrPrimero();
+                    while (atrIndiceActual < prmIndice)
+                        IrSiguiente();
                     return true;
                 }
                 if (prmIndice >= atrLongitud / 2 && prmIndice <= atrLongitud - 1)
                 {
-                    atrNodoActual = atrNodoUltimo;
-                    for (atrIndiceActual = atrLongitud - 1; atrIndiceActual > prmIndice; atrIndiceActual--)
-                        atrNodoActual = atrNodoActual.darAnterior();
+                    IrUltimo();
+                    while (atrIndiceActual > prmIndice)
+                        IrAnterior();
                     return true;
                 }
+            }
+            return false;
+        }
+        protected override bool IrPrimero()
+        {
+            if (!EstaVacia())
+            {
+                atrIndiceActual = 0;
+                atrNodoActual = atrNodoPrimero;
+                atrItemActual = atrNodoActual.darItem();
+                return true;
+            }
+            return false;
+        }
+        protected override bool IrUltimo()
+        {
+            if (!EstaVacia())
+            {
+                atrIndiceActual = atrLongitud - 1;
+                atrNodoActual = atrNodoUltimo;
+                atrItemActual = atrNodoActual.darItem();
+                return true;
+            }
+            return false;
+        }
+        protected override bool IrAnterior()
+        {
+            if (ExisteAnterior())
+            {
+                atrIndiceActual--;
+                atrNodoActual = atrNodoActual.darAnterior();
+                atrItemActual = atrNodoActual.darItem();
+            }
+            return false;
+        }
+        protected override bool IrSiguiente()
+        {
+            if (ExisteSiguiente())
+            {
+                atrIndiceActual++;
+                atrNodoActual = atrNodoActual.darSiguiente();
                 atrItemActual = atrNodoActual.darItem();
             }
             return false;
