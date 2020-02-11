@@ -126,23 +126,47 @@ namespace Servicios.Colecciones.TADS
         clsNodoSimpleEnlazado<Tipo> atrNodoActual;
         protected override bool IrIndice(int prmIndice)
         {
-            if (!EstaVacia())
+            if (EsValido(prmIndice))
             {
                 if (prmIndice == atrLongitud - 1)
-                {
-                    atrIndiceActual = atrLongitud - 1;
-                    atrNodoActual = atrNodoUltimo;
-                    atrItemActual = atrNodoActual.darItem();
-                    return true;
-                }
-                if (EsValido(prmIndice))
-                {
-                    atrNodoActual = atrNodoPrimero;
-                    for (atrIndiceActual = 0; atrIndiceActual < prmIndice-1; atrIndiceActual++)
-                        atrNodoActual = atrNodoActual.darSiguiente();
-                    atrItemActual = atrNodoActual.darItem();
-                    return true;
-                }
+                    return IrUltimo();
+                if (prmIndice < atrIndiceActual)
+                    IrPrimero();
+                while (atrIndiceActual < prmIndice)
+                    IrSiguiente();
+                return true;
+            }
+            return false;
+        }
+        protected override bool IrPrimero()
+        {
+            if (!EstaVacia())
+            {
+                atrIndiceActual = 0;
+                atrNodoActual = atrNodoPrimero;
+                atrItemActual = atrNodoActual.darItem();
+                return true;
+            }
+            return false;
+        }
+        protected override bool IrUltimo()
+        {
+            if (!EstaVacia())
+            {
+                atrIndiceActual = atrLongitud - 1;
+                atrNodoActual = atrNodoUltimo;
+                atrItemActual = atrNodoActual.darItem();
+                return true;
+            }
+            return false;
+        }
+        protected override bool IrSiguiente()
+        {
+            if (ExisteSiguiente())
+            {
+                atrNodoActual = atrNodoActual.darSiguiente();
+                atrIndiceActual++;
+                atrItemActual = atrNodoActual.darItem();
             }
             return false;
         }
