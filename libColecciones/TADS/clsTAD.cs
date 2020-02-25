@@ -1,8 +1,8 @@
 ﻿using System;
-
+using Servicios.Mensajería;
 namespace Servicios.Colecciones.TADS
 {
-    public class clsTAD<Tipo> where Tipo : IComparable
+    public class clsTAD<Tipo> : clsMensajero where Tipo : IComparable
     {
         #region Atributos
         protected int atrLongitud;
