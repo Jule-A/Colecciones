@@ -51,17 +51,20 @@ namespace Servicios.Colecciones.TADS
             }
             if (prmIndice == atrLongitud)
             {
-                atrNodoUltimo.ponerSiguiente(varNodoNuevo);
-                varNodoNuevo.ponerAnterior(atrNodoUltimo);
+                //atrNodoUltimo.ponerSiguiente(varNodoNuevo);
+                //varNodoNuevo.ponerAnterior(atrNodoUltimo);
+                atrNodoUltimo.ConectarSiguiente(varNodoNuevo);
                 atrNodoUltimo = varNodoNuevo;
+                atrLongitud++;
                 return true;
             }
-            if (IrIndice(prmIndice))
+            if (IrIndice(prmIndice-1))
             {
-                varNodoNuevo.ponerSiguiente(atrNodoActual);
-                varNodoNuevo.ponerAnterior(atrNodoActual.darAnterior());
-                atrNodoActual.darAnterior().ponerSiguiente(varNodoNuevo);
-                atrNodoActual.ponerAnterior(varNodoNuevo);
+                //varNodoNuevo.ponerSiguiente(atrNodoActual);
+                //varNodoNuevo.ponerAnterior(atrNodoActual.darAnterior());
+                //atrNodoActual.darAnterior().ponerSiguiente(varNodoNuevo);
+                //atrNodoActual.ponerAnterior(varNodoNuevo);
+                atrNodoActual.ConectarSiguiente(varNodoNuevo);
                 atrLongitud++;
                 return true;
             }
@@ -157,27 +160,21 @@ namespace Servicios.Colecciones.TADS
             }
             return false;
         }
-        protected override bool IrAnterior()
+        protected override bool Retroceder()
         {
-            if (ExisteAnterior())
-            {
-                atrIndiceActual--;
-                atrNodoActual = atrNodoActual.darAnterior();
-                atrItemActual = atrNodoActual.darItem();
-            }
-            return false;
+            atrIndiceActual--;
+            atrNodoActual = atrNodoActual.darAnterior();
+            atrItemActual = atrNodoActual.darItem();
+            return true;
         }
-        protected override bool IrSiguiente()
+        protected override bool Avanzar()
         {
-            if (ExisteSiguiente())
-            {
-                atrIndiceActual++;
-                atrNodoActual = atrNodoActual.darSiguiente();
-                atrItemActual = atrNodoActual.darItem();
-            }
-            return false;
+            atrIndiceActual++;
+            atrNodoActual = atrNodoActual.darSiguiente();
+            atrItemActual = atrNodoActual.darItem();
+            return true;
         }
-        protected override void PonerItemActual(){atrNodoActual.ponerItem(atrItemActual);}
+        protected override void PonerItemActual(Tipo prmItem){atrNodoActual.ponerItem(prmItem);}
         #endregion
         #endregion
     }

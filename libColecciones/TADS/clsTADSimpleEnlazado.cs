@@ -70,7 +70,6 @@ namespace Servicios.Colecciones.TADS
             }
             if (IrIndice(prmIndice - 1))
             {  
-                varNodoNuevo.ponerSiguiente(atrNodoActual.darSiguiente());
                 atrNodoActual.ponerSiguiente(varNodoNuevo);
                 atrLongitud++;
                 return true;
@@ -100,17 +99,9 @@ namespace Servicios.Colecciones.TADS
                 }
                 if (IrIndice(prmIndice - 1))
                 {
-                    varNodoNuevo = atrNodoActual.darSiguiente();
-                    prmItem = varNodoNuevo.darItem();
+                    atrNodoActual.DesconectarSiguiente(ref prmItem);
                     if (prmIndice == atrLongitud - 1)
-                    {
-                        atrNodoActual.ponerSiguiente(null);
                         atrNodoUltimo = atrNodoActual;
-                        atrLongitud--;
-                        return true;
-                    }
-                    atrNodoActual.ponerSiguiente(varNodoNuevo.darSiguiente());
-                    varNodoNuevo.ponerSiguiente(null);
                     atrLongitud--;
                     return true;
                 }
@@ -160,17 +151,14 @@ namespace Servicios.Colecciones.TADS
             }
             return false;
         }
-        protected override bool IrSiguiente()
+        protected override bool Avanzar()
         {
-            if (ExisteSiguiente())
-            {
-                atrNodoActual = atrNodoActual.darSiguiente();
-                atrIndiceActual++;
-                atrItemActual = atrNodoActual.darItem();
-            }
-            return false;
+            atrIndiceActual++;
+            atrNodoActual = atrNodoActual.darSiguiente();
+            atrItemActual = atrNodoActual.darItem();
+            return true;
         }
-        protected override void PonerItemActual(){atrNodoActual.ponerItem(atrItemActual);}
+        protected override void PonerItemActual(Tipo prmItem){atrNodoActual.ponerItem(prmItem);}
         #endregion
         #endregion
     }

@@ -6,13 +6,6 @@ namespace Servicios.Colecciones.TADS
     {
         #region Atributos
         protected int atrLongitud;
-        protected bool atrEstaOrdenadaDescendente;
-        protected bool atrEstaOrdenadaAscendente;
-        protected int atrNumeroComparaciones;
-        protected int atrNumeroIntercambios;
-        protected int atrNumeroInserciones;
-        protected int atrNumeroLlamadosRecursivos;
-        protected bool atrModoInteligente;
         #endregion
         #region Metodos
         #region Auxiliares
@@ -28,7 +21,7 @@ namespace Servicios.Colecciones.TADS
             if (IrIndice(prmIndice))
             {
                 atrItemActual = prmItem;
-                PonerItemActual();
+                PonerItemActual(prmItem);
                 return true;
             }
             return false;
@@ -46,6 +39,17 @@ namespace Servicios.Colecciones.TADS
         public bool Existe(Tipo prmItem) { return false; }
         #endregion
         #region Ordenamiento
+        #region Atributos
+        protected bool atrEstaOrdenadaDescendente;
+        protected bool atrEstaOrdenadaAscendente;
+        protected int atrNumeroComparaciones;
+        protected int atrNumeroIntercambios;
+        protected int atrNumeroInserciones;
+        protected int atrNumeroLlamadosRecursivos;
+        protected bool atrModoInteligente;
+        #endregion
+        #region Métodos
+        #region Mutadores
         protected bool Ordenar(string prmMetodoOrdenamiento, bool prmOrdenDescendente)
         {
             if (!EstaVacia() && DebeOrdenar(prmOrdenDescendente))
@@ -83,7 +87,8 @@ namespace Servicios.Colecciones.TADS
         protected virtual bool MetodoSeleccion(bool prmOrdenDescendente) { return false; }
         protected virtual bool MetodoQuickSort(bool prmOrdenDescendente) { return false; }
         protected virtual bool MetodoInsercion(bool prmOrdenDescendente) { return false; }
-        #region Auxiliares-Consultores
+        #endregion
+        #region Consultores
         protected bool DebeOrdenar(bool prmOrdenDescendente)
         {
             switch (prmOrdenDescendente)
@@ -139,22 +144,38 @@ namespace Servicios.Colecciones.TADS
         public int darNumeroInserciones() { return atrNumeroInserciones; }
         public int darNumeroLlamadosRecursivos() { return atrNumeroLlamadosRecursivos; }
         #endregion
-        #endregion}v 
+        #endregion
+        #endregion 
         #region Iterador
         #region Atributos
         protected int atrIndiceActual;
         protected Tipo atrItemActual;
         #endregion
         #region Métodos
+        #region Mutadores
         protected virtual bool IrIndice(int prmIndice) { return false; }
-        protected virtual void PonerItemActual() { }
+        protected virtual void PonerItemActual(Tipo prmItem) { }
         protected virtual bool IrPrimero() { return false; }
         protected virtual bool IrUltimo() { return false; }
-        protected virtual bool IrAnterior() { return false; }
-        protected virtual bool IrSiguiente() { return false; }
+        protected virtual bool Retroceder() { return false; }
+        protected virtual bool Avanzar() { return false; }
+        protected bool IrAnterior()
+        {
+            if (ExisteAnterior())
+                return Retroceder();
+            return false;
+        }
+        protected bool IrSiguiente()
+        {
+            if (ExisteSiguiente())
+                return Avanzar();
+            return false;
+        }
+        #endregion
+        #region Consultores
         protected bool ExisteAnterior() { return !EstaVacia() && atrIndiceActual > 0; }
         protected bool ExisteSiguiente() { return !EstaVacia() && atrIndiceActual < atrLongitud; }
-
+        #endregion
         #endregion
         #endregion
         #endregion

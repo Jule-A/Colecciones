@@ -307,7 +307,7 @@ namespace Servicios.Colecciones.TADS
             }
             return false;
         }
-        protected override void PonerItemActual(){atrVectorDeItems[atrIndiceActual] = atrItemActual;}
+        protected override void PonerItemActual(Tipo prmItem){atrVectorDeItems[atrIndiceActual] = prmItem; }
         #endregion
         #endregion
     }
