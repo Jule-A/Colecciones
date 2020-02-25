@@ -8,7 +8,7 @@ namespace Servicios.Colecciones.Nodos
         private clsNodoDobleEnlazado<Tipo> atrAnterior;
         private clsNodoDobleEnlazado<Tipo> atrSiguiente;
         #endregion
-        #region Métodos
+        #region Métodos   
         #region Constructores
         public clsNodoDobleEnlazado(Tipo prmItem) : base(prmItem) { }
         public clsNodoDobleEnlazado<Tipo> darAnterior() { return atrAnterior; }

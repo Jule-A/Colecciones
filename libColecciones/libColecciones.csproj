@@ -39,6 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="clsCronometro.cs" />
+    <Compile Include="clsMensajero.cs" />
     <Compile Include="DobleEnlazadas\clsColaDobleEnlazada.cs" />
     <Compile Include="DobleEnlazadas\clsListaDobleEnlazada.cs" />
     <Compile Include="DobleEnlazadas\clsPilaDobleEnlazada.cs" />
