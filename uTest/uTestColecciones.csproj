@@ -78,6 +78,10 @@
       <Project>{d7b2c148-8f2b-4450-b51f-92c3e6c38daf}</Project>
       <Name>libColecciones</Name>
     </ProjectReference>
+    <ProjectReference Include="..\libMensajería\libMensajería.csproj">
+      <Project>{5318c834-c5f4-4446-8691-44f4e0edb557}</Project>
+      <Name>libMensajería</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
