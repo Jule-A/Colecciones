@@ -106,6 +106,24 @@ namespace Servicios.Colecciones.TADS
             }
             return false;
         }
+        protected bool DebeReversar(bool prmOrdenDescendente)
+        {
+            switch (prmOrdenDescendente)
+            {
+                case true:
+                    if (atrEstaOrdenadaDescendente == true)
+                        return false;
+                    else
+                        return true;
+                case false:
+                    if (atrEstaOrdenadaAscendente == true)
+                        return false;
+                    else
+                        return true;
+            }
+            Mensajero("Reversar", "No es posible realizar la Reversión en una colección no ordenada");
+            return false;
+        }
         public bool AjustarOrdenColeccion(string prmCriterio)
         {
             switch (prmCriterio)
