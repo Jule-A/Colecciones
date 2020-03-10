@@ -58,12 +58,12 @@ namespace Servicios.Colecciones.TADS
                 {
                     switch (prmMetodoOrdenamiento)
                     {
-                        case "Burbuja Simple": MetodoBurbujaSimple(prmOrdenDescendente); break;
-                        case "Burbuja Mejorado": MetodoBurbujaMejorado(prmOrdenDescendente); break;
-                        case "Burbuja BiDireccional": MetodoBurbujaBiDireccional(prmOrdenDescendente); break;
-                        case "Seleccion": MetodoSeleccion(prmOrdenDescendente); break;
-                        case "QuickSort": MetodoQuickSort(prmOrdenDescendente); break;
-                        case "Insercion": MetodoInsercion(prmOrdenDescendente); break;
+                        case "Burbuja Simple": BurbujaSimple(prmOrdenDescendente); break;
+                        case "Burbuja Mejorado": BurbujaMejorado(prmOrdenDescendente); break;
+                        case "Burbuja BiDireccional": BurbujaBiDireccional(prmOrdenDescendente); break;
+                        case "Seleccion": Seleccion(prmOrdenDescendente); break;
+                        case "QuickSort": QuickSort(prmOrdenDescendente); break;
+                        case "Insercion": Insercion(prmOrdenDescendente); break;
                         default: return false;
                     }
 
@@ -81,12 +81,13 @@ namespace Servicios.Colecciones.TADS
             else
                 return false;
         }
-        protected virtual bool MetodoBurbujaSimple(bool prmOrdenDescendente) { return false; }
-        protected virtual bool MetodoBurbujaMejorado(bool prmOrdenDescendente) { return false; }
-        protected virtual bool MetodoBurbujaBiDireccional(bool prmOrdenDescendente) { return false; }
-        protected virtual bool MetodoSeleccion(bool prmOrdenDescendente) { return false; }
-        protected virtual bool MetodoQuickSort(bool prmOrdenDescendente) { return false; }
-        protected virtual bool MetodoInsercion(bool prmOrdenDescendente) { return false; }
+        protected virtual bool BurbujaSimple(bool prmOrdenDescendente) { return false; }
+        protected virtual bool BurbujaMejorado(bool prmOrdenDescendente) { return false; }
+        protected virtual bool BurbujaBiDireccional(bool prmOrdenDescendente) { return false; }
+        protected virtual bool Seleccion(bool prmOrdenDescendente) { return false; }
+        protected virtual bool QuickSort(bool prmOrdenDescendente) { return false; }
+        protected virtual bool Insercion(bool prmOrdenDescendente) { return false; }
+        public virtual bool Reversar() { return false; }
         #endregion
         #region Consultores
         protected bool DebeOrdenar(bool prmOrdenDescendente)
@@ -192,7 +193,7 @@ namespace Servicios.Colecciones.TADS
         #endregion
         #region Consultores
         protected bool ExisteAnterior() { return !EstaVacia() && atrIndiceActual > 0; }
-        protected bool ExisteSiguiente() { return !EstaVacia() && atrIndiceActual < atrLongitud; }
+        protected bool ExisteSiguiente() { return !EstaVacia() && atrIndiceActual < atrLongitud - 1; }
         #endregion
         #endregion
         #endregion

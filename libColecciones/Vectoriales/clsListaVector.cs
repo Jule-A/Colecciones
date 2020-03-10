@@ -34,7 +34,6 @@ namespace Servicios.Colecciones.Vectoriales
         {
             return RecuperarEn(prmIndice, ref prmItem);
         }
-        public bool Reversar() { return ReversarVector(); }
         #endregion
         #endregion
     }

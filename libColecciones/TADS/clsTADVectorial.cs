@@ -163,34 +163,7 @@ namespace Servicios.Colecciones.TADS
         public int darFactorDeCrecimiento() { return atrFactorDeCrecimiento; }
         #endregion
         #region Ordenamiento
-        #region Auxiliares Ordenamiento
-        private void CambiarItemsDelVector(int prmPrimerIndice, int prmSegundoIndice)
-        {
-            Tipo varItemTemp = atrVectorDeItems[prmPrimerIndice];
-            atrVectorDeItems[prmPrimerIndice] = atrVectorDeItems[prmSegundoIndice];
-            atrVectorDeItems[prmSegundoIndice] = varItemTemp;
-            atrNumeroIntercambios++;
-        }
-        private bool CompararItems(bool prmOrdenDescendente, int prmPrimerIndice, int prmSegundoIndice)
-        {
-            atrNumeroComparaciones++;
-            if (prmOrdenDescendente)
-            {
-                if (atrVectorDeItems[prmPrimerIndice].CompareTo(atrVectorDeItems[prmSegundoIndice]) < 0)
-                    return true;
-                else
-                    return false;
-            }
-            else
-            {
-                if (atrVectorDeItems[prmPrimerIndice].CompareTo(atrVectorDeItems[prmSegundoIndice]) > 0)
-                    return true;
-                else
-                    return false;
-            }
-        }
-        #endregion
-        protected override bool MetodoBurbujaSimple(bool prmOrdenDescendente)
+        protected override bool BurbujaSimple(bool prmOrdenDescendente)
         {
             try
             {
@@ -198,8 +171,14 @@ namespace Servicios.Colecciones.TADS
                 {
                     for (int j = 0; j < atrLongitud - i - 1; j++)
                     {
-                        if (CompararItems(prmOrdenDescendente, j, (j + 1)))
-                            CambiarItemsDelVector(j, (j + 1));
+                        if ((prmOrdenDescendente&&atrVectorDeItems[j].CompareTo(atrVectorDeItems[j+1]) < 0)
+                            ||(!prmOrdenDescendente&& atrVectorDeItems[j].CompareTo(atrVectorDeItems[j+1]) > 0))
+                        {
+                            Tipo varItemTemp = atrVectorDeItems[j];
+                            atrVectorDeItems[j] = atrVectorDeItems[j+1];
+                            atrVectorDeItems[j+1] = varItemTemp;
+                            atrNumeroIntercambios++;
+                        }
                     }
                 }
                 return true;
@@ -209,7 +188,7 @@ namespace Servicios.Colecciones.TADS
                 return false;
             }
         }
-        protected override bool MetodoBurbujaMejorado(bool prmOrdenDescendente)
+        protected override bool BurbujaMejorado(bool prmOrdenDescendente)
         {
             try
             {
@@ -219,9 +198,13 @@ namespace Servicios.Colecciones.TADS
                     varIntercambioRealizado = false;
                     for (int j = 0; j < atrLongitud - i - 1; j++)
                     {
-                        if (CompararItems(prmOrdenDescendente, j, (j + 1)))
+                        if ((prmOrdenDescendente && atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]) < 0)
+                            || (!prmOrdenDescendente && atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]) > 0))
                         {
-                            CambiarItemsDelVector(j, (j + 1));
+                            Tipo varItemTemp = atrVectorDeItems[j];
+                            atrVectorDeItems[j] = atrVectorDeItems[j + 1];
+                            atrVectorDeItems[j + 1] = varItemTemp;
+                            atrNumeroIntercambios++;
                             varIntercambioRealizado = true;
                         }
                     }
@@ -235,7 +218,7 @@ namespace Servicios.Colecciones.TADS
                 return false;
             }
         }
-        protected override bool MetodoBurbujaBiDireccional(bool prmOrdenDescendente)
+        protected override bool BurbujaBiDireccional(bool prmOrdenDescendente)
         {
             try
             {
@@ -245,9 +228,13 @@ namespace Servicios.Colecciones.TADS
                     varIntercambioRealizado = false;
                     for (int j = 0; j < atrLongitud - 1; j++)
                     {
-                        if (CompararItems(prmOrdenDescendente, j, (j + 1)))
+                        if ((prmOrdenDescendente && atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]) < 0)
+                            || (!prmOrdenDescendente && atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]) > 0))
                         {
-                            CambiarItemsDelVector(j, (j + 1));
+                            Tipo varItemTemp = atrVectorDeItems[j];
+                            atrVectorDeItems[j] = atrVectorDeItems[j + 1];
+                            atrVectorDeItems[j + 1] = varItemTemp;
+                            atrNumeroIntercambios++;
                             varIntercambioRealizado = true;
                         }
                     } 
@@ -256,9 +243,13 @@ namespace Servicios.Colecciones.TADS
                     varIntercambioRealizado = false;
                     for (int j = atrLongitud - 2; j >= 0; j--)
                     {
-                        if (CompararItems(prmOrdenDescendente, j, (j + 1)))
+                        if ((prmOrdenDescendente && atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]) < 0)
+                            || (!prmOrdenDescendente && atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]) > 0))
                         {
-                            CambiarItemsDelVector(j, (j + 1));
+                            Tipo varItemTemp = atrVectorDeItems[j];
+                            atrVectorDeItems[j] = atrVectorDeItems[j + 1];
+                            atrVectorDeItems[j + 1] = varItemTemp;
+                            atrNumeroIntercambios++;
                             varIntercambioRealizado = true;
                         }
                     }
@@ -270,10 +261,10 @@ namespace Servicios.Colecciones.TADS
                 return false;
             }
         }
-        protected override bool MetodoSeleccion(bool prmOrdenDescendente) { return false; }
-        protected override bool MetodoQuickSort(bool prmOrdenDescendente) { return false; }
-        protected override bool MetodoInsercion(bool prmOrdenDescendente) { return false; }
-        protected bool ReversarVector()
+        protected override bool Seleccion(bool prmOrdenDescendente) { return false; }
+        protected override bool QuickSort(bool prmOrdenDescendente) { return false; }
+        protected override bool Insercion(bool prmOrdenDescendente) { return false; }
+        public override bool Reversar()
         {
             try
             {

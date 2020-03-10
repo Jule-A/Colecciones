@@ -11,7 +11,7 @@ namespace Servicios.Colecciones.TADS
         #endregion
         #region Métodos
         #region Auxiliares
-        protected bool ReversarNodos()
+        public override bool Reversar()
         {
             if (!EstaVacia())
             {
@@ -80,29 +80,29 @@ namespace Servicios.Colecciones.TADS
                 {
                     atrNodoPrimero = null;
                     atrNodoUltimo = null;
+                    atrLongitud--;
                     return true;
                 }
                 if (prmIndice == 0)
                 {
-                    varNodoNuevo = atrNodoActual.darSiguiente();
+                    varNodoNuevo = this.atrNodoActual.darSiguiente();
                     varNodoNuevo.ponerAnterior(null);
-                    atrNodoActual = varNodoNuevo;
-                    return true;
-                }
-                clsNodoDobleEnlazado<Tipo> varNodoActual = atrNodoPrimero;
-                for (int varIndice = 1; varIndice < prmIndice; varIndice++)
-                    varNodoActual = varNodoActual.darSiguiente();
-                varNodoNuevo = varNodoActual.darSiguiente();
-                prmItem = varNodoNuevo.darItem();
-                if (prmIndice == atrLongitud - 1)
-                {
-                    varNodoActual.ponerSiguiente(null);
-                    atrNodoUltimo = varNodoActual;
+                    this.atrNodoActual = varNodoNuevo;
+                    atrNodoPrimero = varNodoNuevo;
                     atrLongitud--;
                     return true;
                 }
-                varNodoActual.ponerSiguiente(varNodoNuevo.darSiguiente());
-                varNodoNuevo.darSiguiente().ponerAnterior(varNodoActual);
+                if (prmIndice == atrLongitud - 1)
+                {
+                    varNodoNuevo = atrNodoActual.darAnterior();
+                    atrNodoUltimo = varNodoNuevo;
+                    atrNodoActual = varNodoNuevo;
+                    atrLongitud--;
+                    return true;
+                }
+                varNodoNuevo = atrNodoActual.darSiguiente();
+                atrNodoActual.ponerSiguiente(varNodoNuevo);
+                varNodoNuevo.darSiguiente().ponerAnterior(atrNodoActual);
                 varNodoNuevo.ponerSiguiente(null);
                 varNodoNuevo.ponerAnterior(null);
                 atrLongitud--;
