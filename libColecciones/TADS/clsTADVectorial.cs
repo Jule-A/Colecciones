@@ -171,8 +171,9 @@ namespace Servicios.Colecciones.TADS
                 {
                     for (int j = 0; j < atrLongitud - i - 1; j++)
                     {
-                        if ((prmOrdenDescendente&&atrVectorDeItems[j].CompareTo(atrVectorDeItems[j+1]) < 0)
-                            ||(!prmOrdenDescendente&& atrVectorDeItems[j].CompareTo(atrVectorDeItems[j+1]) > 0))
+                        int varResultadoComparar = atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]);
+                        atrNumeroComparaciones++;
+                        if (varResultadoComparar != 0 && (prmOrdenDescendente ^ varResultadoComparar > 0))
                         {
                             Tipo varItemTemp = atrVectorDeItems[j];
                             atrVectorDeItems[j] = atrVectorDeItems[j+1];
@@ -198,8 +199,9 @@ namespace Servicios.Colecciones.TADS
                     varIntercambioRealizado = false;
                     for (int j = 0; j < atrLongitud - i - 1; j++)
                     {
-                        if ((prmOrdenDescendente && atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]) < 0)
-                            || (!prmOrdenDescendente && atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]) > 0))
+                        int varResultadoComparar = atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]);
+                        atrNumeroComparaciones++;
+                        if (varResultadoComparar != 0 && (prmOrdenDescendente ^ varResultadoComparar > 0))
                         {
                             Tipo varItemTemp = atrVectorDeItems[j];
                             atrVectorDeItems[j] = atrVectorDeItems[j + 1];
@@ -228,9 +230,10 @@ namespace Servicios.Colecciones.TADS
                     varIntercambioRealizado = false;
                     for (int j = 0; j < atrLongitud - 1; j++)
                     {
-                        if ((prmOrdenDescendente && atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]) < 0)
-                            || (!prmOrdenDescendente && atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]) > 0))
-                        {
+                        int varResultadoComparar = atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]);
+                        atrNumeroComparaciones++;
+                        if (varResultadoComparar != 0 && (prmOrdenDescendente ^ varResultadoComparar > 0))
+                        { 
                             Tipo varItemTemp = atrVectorDeItems[j];
                             atrVectorDeItems[j] = atrVectorDeItems[j + 1];
                             atrVectorDeItems[j + 1] = varItemTemp;
@@ -243,8 +246,9 @@ namespace Servicios.Colecciones.TADS
                     varIntercambioRealizado = false;
                     for (int j = atrLongitud - 2; j >= 0; j--)
                     {
-                        if ((prmOrdenDescendente && atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]) < 0)
-                            || (!prmOrdenDescendente && atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]) > 0))
+                        int varResultadoComparar = atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]);
+                        atrNumeroComparaciones++;
+                        if (varResultadoComparar != 0 && (prmOrdenDescendente ^ varResultadoComparar > 0))
                         {
                             Tipo varItemTemp = atrVectorDeItems[j];
                             atrVectorDeItems[j] = atrVectorDeItems[j + 1];
@@ -264,27 +268,19 @@ namespace Servicios.Colecciones.TADS
         protected override bool Seleccion(bool prmOrdenDescendente) { return false; }
         protected override bool QuickSort(bool prmOrdenDescendente) { return false; }
         protected override bool Insercion(bool prmOrdenDescendente) { return false; }
-        public override bool Reversar()
+        protected override bool IntercambiarEntre(int prmIndice1, int prmIndice2)
         {
-            try
+            if (EsValido(prmIndice1) && EsValido(prmIndice2))
             {
-                if (!EstaVacia())
+                if(prmIndice1 != prmIndice2)
                 {
-                    Tipo[] varVectorAuxiliar = new Tipo[atrCapacidad];
-                    int varIndice2 = atrLongitud - 1;
-                    for (int varIndice1 = 0; varIndice1 < atrLongitud; varIndice1++)
-                    {
-                        varVectorAuxiliar[varIndice1] = atrVectorDeItems[varIndice2];
-                        varIndice2--;
-                    }
-                    atrVectorDeItems = varVectorAuxiliar;
+                    Tipo varItemIndice1 = atrVectorDeItems[prmIndice1];
+                    atrVectorDeItems[prmIndice1] = atrVectorDeItems[prmIndice2];
+                    atrVectorDeItems[prmIndice2] = varItemIndice1;
+                    return true;
                 }
-                return true;
             }
-            catch (Exception e)
-            {
-                return false;
-            }
+            return false;
         }
         #endregion
         #region Iterador

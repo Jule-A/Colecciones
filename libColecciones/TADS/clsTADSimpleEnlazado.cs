@@ -11,33 +11,24 @@ namespace Servicios.Colecciones.TADS
         #endregion
         #region Métodos
         #region Auxiliares
-        public override bool Reversar()
+        protected override bool IntercambiarEntre(int prmIndice1, int prmIndice2)
         {
-            if (!EstaVacia())
+            if (EsValido(prmIndice1) && EsValido(prmIndice2))
             {
-                clsNodoSimpleEnlazado<Tipo> varNodoNuevo = atrNodoUltimo;
-                clsNodoSimpleEnlazado<Tipo> varNodoActual;
-                clsNodoSimpleEnlazado<Tipo> varNodoAuxiliar;
-                varNodoAuxiliar = varNodoNuevo;
-                for (int varIndice1 = 1; varIndice1 < atrLongitud; varIndice1++)
+                if (prmIndice1 != prmIndice2)
                 {
-                    varNodoActual = atrNodoPrimero;
-                    for (int varIndice2 = 1; varIndice2 < atrLongitud - varIndice1; varIndice2++)
-                        varNodoActual = varNodoActual.darSiguiente();
-                    if(varIndice1 == atrLongitud - 1)
+                    IrIndice(prmIndice1);
+                    clsNodoSimpleEnlazado<Tipo> varNodoIndice1 = atrNodoActual;
+                    IrIndice(prmIndice2);
+                    clsNodoSimpleEnlazado<Tipo> varNodoIndice2 = atrNodoActual;
+                    if(varNodoIndice1 != null && varNodoIndice2 != null)
                     {
-                        varNodoAuxiliar.ponerSiguiente(null);
-                        atrNodoUltimo = atrNodoPrimero;
-                        atrNodoPrimero = varNodoNuevo;
+                        Tipo varItemIndice1 = varNodoIndice1.darItem();
+                        varNodoIndice1.ponerItem(varNodoIndice2.darItem());
+                        varNodoIndice2.ponerItem(varItemIndice1);
                         return true;
                     }
-                    else
-                    {
-                        varNodoAuxiliar.ponerSiguiente(varNodoActual);
-                        varNodoAuxiliar = varNodoAuxiliar.darSiguiente();
-                    }
                 }
-
             }
             return false;
         }
@@ -81,7 +72,7 @@ namespace Servicios.Colecciones.TADS
             clsNodoSimpleEnlazado<Tipo> varNodoNuevo;
             if (!EstaVacia())
             {
-                if (atrLongitud - 1 == 0)
+                if (prmIndice == 0 && atrLongitud == 1)
                 {
                     prmItem = atrNodoPrimero.darItem();
                     atrNodoPrimero = null;
@@ -99,11 +90,14 @@ namespace Servicios.Colecciones.TADS
                 }
                 if (IrIndice(prmIndice - 1))
                 {
-                    atrNodoActual.DesconectarSiguiente(ref prmItem);
-                    if (prmIndice == atrLongitud - 1)
-                        atrNodoUltimo = atrNodoActual;
-                    atrLongitud--;
-                    return true;
+                    if (atrNodoActual.DesconectarSiguiente(ref prmItem))
+                    {
+                        if (prmIndice == atrLongitud - 1)
+                            atrNodoUltimo = atrNodoActual;
+                        atrLongitud--;
+                        return true;
+                    }
+                    return false;
                 }
             }
             return false;
@@ -117,19 +111,23 @@ namespace Servicios.Colecciones.TADS
         clsNodoSimpleEnlazado<Tipo> atrNodoActual;
         protected override bool IrIndice(int prmIndice)
         {
-            if (EsValido(prmIndice))
+            if (prmIndice == 0)
+                return IrPrimero();
+            if (prmIndice == atrLongitud - 1)
+                return IrUltimo();
+            if (EsValido(prmIndice) && (atrIndiceActual > 0) && (atrIndiceActual < prmIndice))
             {
-                if (prmIndice == 0)
-                    return IrPrimero();
-                if (prmIndice == atrLongitud - 1)
-                    return IrUltimo();
-                if (prmIndice < atrIndiceActual || atrNodoActual == null)
-                    IrPrimero();
+                IrPrimero();
                 while (atrIndiceActual < prmIndice)
                     IrSiguiente();
-                return true;
             }
-            return false;
+            if (EsValido(prmIndice))
+            {
+                IrPrimero();
+                while (atrIndiceActual < prmIndice)
+                    IrSiguiente();
+            }
+            return true;
         }
         protected override bool IrPrimero()
         {
