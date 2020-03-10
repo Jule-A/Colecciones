@@ -13,7 +13,6 @@ namespace Servicios.Colecciones.SimpleEnlazadas
         public bool Modificar(int prmIndice, Tipo prmItem){ return ModificarEn(prmIndice, prmItem); }
         public bool Remover(int prmIndice, ref Tipo prmItem){ return ExtraerEn(prmIndice, ref prmItem); }
         public bool Recuperar(int prmIndice, ref Tipo prmItem) { return RecuperarEn(prmIndice, ref prmItem); }
-        public bool Reversar() { return ReversarNodos(); }
         #endregion
         #endregion
     }

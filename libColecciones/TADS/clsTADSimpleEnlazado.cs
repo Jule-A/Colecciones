@@ -11,7 +11,7 @@ namespace Servicios.Colecciones.TADS
         #endregion
         #region Métodos
         #region Auxiliares
-        protected bool ReversarNodos()
+        public override bool Reversar()
         {
             if (!EstaVacia())
             {
@@ -119,9 +119,11 @@ namespace Servicios.Colecciones.TADS
         {
             if (EsValido(prmIndice))
             {
+                if (prmIndice == 0)
+                    return IrPrimero();
                 if (prmIndice == atrLongitud - 1)
                     return IrUltimo();
-                if (prmIndice < atrIndiceActual)
+                if (prmIndice < atrIndiceActual || atrNodoActual == null)
                     IrPrimero();
                 while (atrIndiceActual < prmIndice)
                     IrSiguiente();
