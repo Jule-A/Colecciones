@@ -97,13 +97,17 @@ namespace Servicios.Colecciones.TADS
                     atrLongitud--;
                     return true;
                 }
-                if (IrIndice(prmIndice - 1))
+                //Hablar con Chaustre
+                if (EsValido(prmIndice))
                 {
-                    atrNodoActual.DesconectarSiguiente(ref prmItem);
-                    if (prmIndice == atrLongitud - 1)
-                        atrNodoUltimo = atrNodoActual;
-                    atrLongitud--;
-                    return true;
+                    if (IrIndice(prmIndice - 1))
+                    {
+                        atrNodoActual.DesconectarSiguiente(ref prmItem);
+                        if (prmIndice == atrLongitud - 1)
+                            atrNodoUltimo = atrNodoActual;
+                        atrLongitud--;
+                        return true;
+                    }
                 }
             }
             return false;
