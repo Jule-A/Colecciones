@@ -87,7 +87,21 @@ namespace Servicios.Colecciones.TADS
         protected virtual bool Seleccion(bool prmOrdenDescendente) { return false; }
         protected virtual bool QuickSort(bool prmOrdenDescendente) { return false; }
         protected virtual bool Insercion(bool prmOrdenDescendente) { return false; }
-        public virtual bool Reversar() { return false; }
+        protected virtual bool IntercambiarEntre(int prmIndice1, int prmIndice2) { return false; }
+        public bool Reversar()
+        {
+            int varTopeIzquierdo = 0;
+            int varTopeDerecho = atrLongitud - 1;
+            do
+            {
+                IntercambiarEntre(varTopeIzquierdo, varTopeDerecho);
+                varTopeIzquierdo++;
+                varTopeDerecho--;
+            } while (varTopeIzquierdo < varTopeDerecho);
+            atrEstaOrdenadaAscendente = !atrEstaOrdenadaAscendente;
+            atrEstaOrdenadaDescendente = !atrEstaOrdenadaDescendente;
+            return false;
+        }
         #endregion
         #region Consultores
         protected bool DebeOrdenar(bool prmOrdenDescendente)

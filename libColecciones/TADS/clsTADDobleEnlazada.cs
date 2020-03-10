@@ -11,19 +11,24 @@ namespace Servicios.Colecciones.TADS
         #endregion
         #region Métodos
         #region Auxiliares
-        public override bool Reversar()
+        protected override bool IntercambiarEntre(int prmIndice1, int prmIndice2)
         {
-            if (!EstaVacia())
+            if (EsValido(prmIndice1) && EsValido(prmIndice2))
             {
-                clsNodoDobleEnlazado<Tipo> varNodoNuevo = atrNodoUltimo;
-                clsNodoDobleEnlazado<Tipo> varNodoTemporal = atrNodoUltimo.darAnterior();
-                varNodoNuevo.ponerAnterior(null);
-                varNodoNuevo.ponerSiguiente(varNodoTemporal);
-                varNodoTemporal.ponerSiguiente(varNodoTemporal.darAnterior());
-                varNodoTemporal.ponerAnterior(varNodoNuevo);
-                atrNodoUltimo.ponerSiguiente(varNodoNuevo);
-                varNodoNuevo.ponerAnterior(atrNodoUltimo);
-                atrNodoUltimo = varNodoNuevo;
+                if (prmIndice1 != prmIndice2)
+                {
+                    IrIndice(prmIndice1);
+                    clsNodoDobleEnlazado<Tipo> varNodoIndice1 = atrNodoActual;
+                    IrIndice(prmIndice2);
+                    clsNodoDobleEnlazado<Tipo> varNodoIndice2 = atrNodoActual;
+                    if (varNodoIndice1 != null && varNodoIndice2 != null)
+                    {
+                        Tipo varItemIndice1 = varNodoIndice1.darItem();
+                        varNodoIndice1.ponerItem(varNodoIndice2.darItem());
+                        varNodoIndice2.ponerItem(varItemIndice1);
+                        return true;
+                    }
+                }
             }
             return false;
         }
