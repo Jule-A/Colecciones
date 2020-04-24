@@ -4,17 +4,20 @@ using System;
 
 namespace Servicios.Colecciones.Vectoriales
 {
-    public class clsPilaVector<Tipo>: clsTADVectorial<Tipo>, iPila<Tipo> where Tipo : IComparable
+    public class clsPilaVector<Tipo> : clsTADVectorial<Tipo>, iPila<Tipo> where Tipo : IComparable
     {
         #region Constructores
-        public clsPilaVector(): base() { }
+        public clsPilaVector() : base() { }
         public clsPilaVector(int prmCapacidad) : base(prmCapacidad) { }
         public clsPilaVector(int prmCapacidad, int prmFactorDeCrecimiento) :
-            base(prmCapacidad,prmFactorDeCrecimiento) { }
-        public clsPilaVector(bool prmCapacidadFlexible) : 
-            base(prmCapacidadFlexible) { }
-        public clsPilaVector(int prmCapacidad, bool prmCapacidadFlexible, bool prmOrdenDescendente, bool prmModoInteligente) : 
-            base(prmCapacidad, prmCapacidadFlexible, prmOrdenDescendente, prmModoInteligente) { }
+            base(prmCapacidad, prmFactorDeCrecimiento)
+        { }
+        public clsPilaVector(bool prmCapacidadFlexible) :
+            base(prmCapacidadFlexible)
+        { }
+        public clsPilaVector(int prmCapacidad, bool prmCapacidadFlexible, bool prmOrdenDescendente, bool prmModoInteligente) :
+            base(prmCapacidad, prmCapacidadFlexible, prmOrdenDescendente, prmModoInteligente)
+        { }
         #endregion
         #region Métodos
         public bool Apilar(Tipo prmItem) { return InsertarEn(0, prmItem); }

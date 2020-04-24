@@ -23,7 +23,7 @@
         #region Mensajería
         protected void Mensajero(string prmMetodoEnEjecucion)
         {
-            atrMensajeUltimoMetodo = "El método <"+ prmMetodoEnEjecucion + "> de <" + darNombreEntidad() + "> ha finalizado correctamente";
+            atrMensajeUltimoMetodo = "El método <" + prmMetodoEnEjecucion + "> de <" + darNombreEntidad() + "> ha finalizado correctamente";
         }
         protected void Mensajero(string prmMetodoEnejecucion, string prmDescripcion)
         {
@@ -42,7 +42,7 @@
             if (atrModoCronometro && !atrModoMensajero)
                 atrMensajeUltimoMetodo = atrCronometro.darMensajeTiempoEjecucion();
             if (atrModoMensajero && atrModoCronometro)
-                Mensajero(prmMetodoEnEjecucion, atrMensajeUltimoMetodo +"\n"+atrCronometro.darMensajeTiempoEjecucion(), prmReportarExito);
+                Mensajero(prmMetodoEnEjecucion, atrMensajeUltimoMetodo + "\n" + atrCronometro.darMensajeTiempoEjecucion(), prmReportarExito);
         }
         #endregion
         #endregion

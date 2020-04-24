@@ -8,9 +8,9 @@ namespace Servicios.Colecciones.DobleEnlazadas
     {
         #region Métodos
         #region CRUDS
-        public bool Apilar(Tipo prmItem){ return InsertarEn(0, prmItem); }
-        public bool Desapilar(ref Tipo prmItem){ return ExtraerEn(0, ref prmItem); }
-        public bool Revisar(ref Tipo prmItem){ return RecuperarEn(0, ref prmItem); }
+        public bool Apilar(Tipo prmItem) { return InsertarEn(0, prmItem); }
+        public bool Desapilar(ref Tipo prmItem) { return ExtraerEn(0, ref prmItem); }
+        public bool Revisar(ref Tipo prmItem) { return RecuperarEn(0, ref prmItem); }
         #endregion
         #endregion
     }

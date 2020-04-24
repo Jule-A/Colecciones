@@ -24,7 +24,7 @@ namespace Servicios.Colecciones.Vectoriales
         }
         public bool Modificar(int prmIndice, Tipo prmItem)
         {
-            return ModificarEn(prmIndice,prmItem);
+            return ModificarEn(prmIndice, prmItem);
         }
         public bool Remover(int prmIndice, ref Tipo prmItem)
         {

@@ -9,7 +9,7 @@ namespace Servicios.Colecciones.TADS
         #endregion
         #region Metodos
         #region Auxiliares
-        protected bool EsValido(int prmIndice){ return prmIndice >= 0 && prmIndice < atrLongitud; }
+        protected bool EsValido(int prmIndice) { return prmIndice >= 0 && prmIndice < atrLongitud; }
         protected bool EstaVacia() { return atrLongitud == 0; }
         public int darLongitud() { return atrLongitud; }
         #endregion
@@ -62,7 +62,7 @@ namespace Servicios.Colecciones.TADS
                         case "Burbuja Mejorado": BurbujaMejorado(prmOrdenDescendente); break;
                         case "Burbuja BiDireccional": BurbujaBiDireccional(prmOrdenDescendente); break;
                         case "Seleccion": Seleccion(prmOrdenDescendente); break;
-                        case "QuickSort": QuickSort(prmOrdenDescendente); break;
+                        case "QuickSort": QuickSort(prmOrdenDescendente, 0, atrLongitud - 1); break;
                         case "Insercion": Insercion(prmOrdenDescendente); break;
                         default: return false;
                     }
@@ -85,59 +85,38 @@ namespace Servicios.Colecciones.TADS
         protected virtual bool BurbujaMejorado(bool prmOrdenDescendente) { return false; }
         protected virtual bool BurbujaBiDireccional(bool prmOrdenDescendente) { return false; }
         protected virtual bool Seleccion(bool prmOrdenDescendente) { return false; }
-        protected virtual bool QuickSort(bool prmOrdenDescendente) { return false; }
+        protected virtual bool QuickSort(bool prmOrdenDescendente, int prmIndiceInicial, int prmIndiceFinal) { return false; }
         protected virtual bool Insercion(bool prmOrdenDescendente) { return false; }
         protected virtual bool IntercambiarEntre(int prmIndice1, int prmIndice2) { return false; }
         public bool Reversar()
         {
-            int varTopeIzquierdo = 0;
-            int varTopeDerecho = atrLongitud - 1;
-            do
+            if (!EstaVacia())
             {
-                IntercambiarEntre(varTopeIzquierdo, varTopeDerecho);
-                varTopeIzquierdo++;
-                varTopeDerecho--;
-            } while (varTopeIzquierdo < varTopeDerecho);
-            atrEstaOrdenadaAscendente = !atrEstaOrdenadaAscendente;
-            atrEstaOrdenadaDescendente = !atrEstaOrdenadaDescendente;
+                int varTopeIzquierdo = 0;
+                int varTopeDerecho = atrLongitud - 1;
+                do
+                {
+                    IntercambiarEntre(varTopeIzquierdo, varTopeDerecho);
+                    varTopeIzquierdo++;
+                    varTopeDerecho--;
+                } while (varTopeIzquierdo < varTopeDerecho);
+                atrEstaOrdenadaAscendente = !atrEstaOrdenadaAscendente;
+                atrEstaOrdenadaDescendente = !atrEstaOrdenadaDescendente;
+            }
             return false;
         }
         #endregion
         #region Consultores
         protected bool DebeOrdenar(bool prmOrdenDescendente)
         {
-            switch (prmOrdenDescendente)
+            if (atrModoInteligente)
             {
-                case true:
-                    if (atrEstaOrdenadaDescendente == true)
-                        return false;
-                    else
-                        return true;
-                case false:
-                    if (atrEstaOrdenadaAscendente == true)
-                        return false;
-                    else
-                        return true;
+                if (prmOrdenDescendente)
+                    return !atrEstaOrdenadaDescendente;
+                else
+                    return !atrEstaOrdenadaAscendente;
             }
-            return false;
-        }
-        protected bool DebeReversar(bool prmOrdenDescendente)
-        {
-            switch (prmOrdenDescendente)
-            {
-                case true:
-                    if (atrEstaOrdenadaDescendente == true)
-                        return false;
-                    else
-                        return true;
-                case false:
-                    if (atrEstaOrdenadaAscendente == true)
-                        return false;
-                    else
-                        return true;
-            }
-            Mensajero("Reversar", "No es posible realizar la Reversión en una colección no ordenada");
-            return false;
+            return true;
         }
         public bool AjustarOrdenColeccion(string prmCriterio)
         {

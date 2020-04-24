@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Servicios.Colecciones.TADS
 {
@@ -45,7 +45,7 @@ namespace Servicios.Colecciones.TADS
         {
             ValidarCapacidad(prmCapacidad);
             atrCapacidadFlexible = prmCapacidadFlexible;
-            if(prmCapacidadFlexible)
+            if (prmCapacidadFlexible)
                 atrFactorDeCrecimiento = 1;
             else
                 atrFactorDeCrecimiento = 0;
@@ -112,7 +112,7 @@ namespace Servicios.Colecciones.TADS
             }
             if (!prmHaciaDerecha)
             {
-                for (int varIndice = prmIndice; varIndice < atrLongitud-1; varIndice++)
+                for (int varIndice = prmIndice; varIndice < atrLongitud - 1; varIndice++)
                     atrVectorDeItems[varIndice] = atrVectorDeItems[varIndice + 1];
                 return true;
             }
@@ -130,13 +130,13 @@ namespace Servicios.Colecciones.TADS
         #region CRUDS - Query
         protected override bool InsertarEn(int prmIndice, Tipo prmItem)
         {
-            if (prmIndice==atrLongitud && atrLongitud < atrCapacidad)
+            if (prmIndice == atrLongitud && atrLongitud < atrCapacidad)
             {
                 atrVectorDeItems[prmIndice] = prmItem;
                 atrLongitud++;
                 return true;
             }
-            if ((EsValido(prmIndice) || prmIndice==atrLongitud) && (DesplazarItems(true, prmIndice)))
+            if ((EsValido(prmIndice) || prmIndice == atrLongitud) && (DesplazarItems(true, prmIndice)))
             {
                 atrVectorDeItems[prmIndice] = prmItem;
                 atrLongitud++;
@@ -176,8 +176,8 @@ namespace Servicios.Colecciones.TADS
                         if (varResultadoComparar != 0 && (prmOrdenDescendente ^ varResultadoComparar > 0))
                         {
                             Tipo varItemTemp = atrVectorDeItems[j];
-                            atrVectorDeItems[j] = atrVectorDeItems[j+1];
-                            atrVectorDeItems[j+1] = varItemTemp;
+                            atrVectorDeItems[j] = atrVectorDeItems[j + 1];
+                            atrVectorDeItems[j + 1] = varItemTemp;
                             atrNumeroIntercambios++;
                         }
                     }
@@ -233,14 +233,14 @@ namespace Servicios.Colecciones.TADS
                         int varResultadoComparar = atrVectorDeItems[j].CompareTo(atrVectorDeItems[j + 1]);
                         atrNumeroComparaciones++;
                         if (varResultadoComparar != 0 && (prmOrdenDescendente ^ varResultadoComparar > 0))
-                        { 
+                        {
                             Tipo varItemTemp = atrVectorDeItems[j];
                             atrVectorDeItems[j] = atrVectorDeItems[j + 1];
                             atrVectorDeItems[j + 1] = varItemTemp;
                             atrNumeroIntercambios++;
                             varIntercambioRealizado = true;
                         }
-                    } 
+                    }
                     if (!varIntercambioRealizado)
                         return true;
                     varIntercambioRealizado = false;
@@ -265,14 +265,121 @@ namespace Servicios.Colecciones.TADS
                 return false;
             }
         }
-        protected override bool Seleccion(bool prmOrdenDescendente) { return false; }
-        protected override bool QuickSort(bool prmOrdenDescendente) { return false; }
-        protected override bool Insercion(bool prmOrdenDescendente) { return false; }
+        protected override bool Seleccion(bool prmOrdenDescendente)
+        {
+            try
+            {
+                int varPosExterior, varPosInterior, varPosDelMinimo;
+                Tipo varElementoTemporal;
+
+                for (varPosExterior = 0; varPosExterior < atrLongitud - 1; varPosExterior++)
+                {
+                    varPosDelMinimo = varPosExterior;
+                    for (varPosInterior = varPosExterior + 1; varPosInterior < atrLongitud; varPosInterior++)
+                    {
+                        atrNumeroComparaciones++;
+                        if (prmOrdenDescendente ^ atrVectorDeItems[varPosDelMinimo].CompareTo(atrVectorDeItems[varPosInterior]) > 0)
+                        {
+                            varPosDelMinimo = varPosInterior;
+                        }
+                    }
+                    if (varPosDelMinimo != varPosExterior)
+                    {
+                        varElementoTemporal = atrVectorDeItems[varPosDelMinimo];
+                        atrVectorDeItems[varPosDelMinimo] = atrVectorDeItems[varPosExterior];
+                        atrVectorDeItems[varPosExterior] = varElementoTemporal;
+                        atrNumeroIntercambios++;
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        protected override bool QuickSort(bool prmOrdenDescendente, int prmIndiceInicial, int prmIndiceFinal)
+        {
+            try
+            {
+                Tipo varPivote = atrVectorDeItems[(prmIndiceInicial + prmIndiceFinal) / 2];
+                int varPosIzquierdo = prmIndiceInicial;
+                int varPosDerecho = prmIndiceFinal;
+                Tipo varAuxiliar;
+                while ((varPosIzquierdo <= varPosDerecho) && (prmIndiceFinal - prmIndiceInicial > 0))
+                {
+                    while ((prmOrdenDescendente ^ atrVectorDeItems[varPosIzquierdo].CompareTo(varPivote) < 0) && atrVectorDeItems[varPosIzquierdo].CompareTo(varPivote) != 0)
+                    {
+                        varPosIzquierdo++;
+                        atrNumeroComparaciones++;
+                    }
+                    atrNumeroComparaciones++;
+                    while ((prmOrdenDescendente ^ atrVectorDeItems[varPosDerecho].CompareTo(varPivote) > 0) && atrVectorDeItems[varPosDerecho].CompareTo(varPivote) != 0)
+                    {
+                        varPosDerecho--;
+                        atrNumeroComparaciones++;
+                    }
+                    atrNumeroComparaciones++;
+                    if ((varPosIzquierdo <= varPosDerecho))
+                    {
+                        varAuxiliar = atrVectorDeItems[varPosIzquierdo];
+                        atrVectorDeItems[varPosIzquierdo] = atrVectorDeItems[varPosDerecho];
+                        atrVectorDeItems[varPosDerecho] = varAuxiliar;
+                        atrNumeroIntercambios++;
+                        varPosIzquierdo++;
+                        varPosDerecho--;
+                    }
+                }
+                if ((prmIndiceInicial < varPosDerecho))
+                {
+                    QuickSort(prmOrdenDescendente, prmIndiceInicial, varPosDerecho);
+                    atrNumeroLlamadosRecursivos++;
+                }
+                if ((varPosIzquierdo < prmIndiceFinal))
+                {
+                    QuickSort(prmOrdenDescendente, varPosIzquierdo, prmIndiceFinal);
+                    atrNumeroLlamadosRecursivos++;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        protected override bool Insercion(bool prmOrdenDescendente)
+        {
+            try
+            {
+                int varCicloExterior;
+                int varCicloInterior;
+                Tipo varObjetoInsertado;
+                for (varCicloExterior = 1; varCicloExterior < atrLongitud; varCicloExterior++)
+                {
+                    varObjetoInsertado = atrVectorDeItems[varCicloExterior];
+                    varCicloInterior = varCicloExterior - 1;
+                    while ((varCicloInterior >= 0) && (atrVectorDeItems[varCicloInterior].CompareTo(varObjetoInsertado) != 0 && (prmOrdenDescendente ^ atrVectorDeItems[varCicloInterior].CompareTo(varObjetoInsertado) > 0)))
+                    {
+                        atrNumeroComparaciones++;
+                        atrVectorDeItems[varCicloInterior + 1] = atrVectorDeItems[varCicloInterior];
+                        varCicloInterior = varCicloInterior - 1;
+                    }
+                    atrVectorDeItems[varCicloInterior + 1] = varObjetoInsertado;
+                    atrNumeroComparaciones++;
+                    atrNumeroInserciones++;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         protected override bool IntercambiarEntre(int prmIndice1, int prmIndice2)
         {
             if (EsValido(prmIndice1) && EsValido(prmIndice2))
             {
-                if(prmIndice1 != prmIndice2)
+                if (prmIndice1 != prmIndice2)
                 {
                     Tipo varItemIndice1 = atrVectorDeItems[prmIndice1];
                     atrVectorDeItems[prmIndice1] = atrVectorDeItems[prmIndice2];
@@ -294,7 +401,7 @@ namespace Servicios.Colecciones.TADS
             }
             return false;
         }
-        protected override void PonerItemActual(Tipo prmItem){atrVectorDeItems[atrIndiceActual] = prmItem; }
+        protected override void PonerItemActual(Tipo prmItem) { atrVectorDeItems[atrIndiceActual] = prmItem; }
         #endregion
         #endregion
     }

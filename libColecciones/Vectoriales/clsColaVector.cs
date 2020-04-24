@@ -13,7 +13,7 @@ namespace Servicios.Colecciones.Vectoriales
         public clsColaVector(bool prmCapacidadFlexible) : base(prmCapacidadFlexible) { }
         #endregion
         #region Métodos
-        public bool Encolar(Tipo prmItem) {return InsertarEn(atrLongitud, prmItem);}
+        public bool Encolar(Tipo prmItem) { return InsertarEn(atrLongitud, prmItem); }
         public bool Desencolar(ref Tipo prmItem) { return ExtraerEn(0, ref prmItem); }
         public bool Revisar(ref Tipo prmItem) { return RecuperarEn(0, ref prmItem); }
         #endregion

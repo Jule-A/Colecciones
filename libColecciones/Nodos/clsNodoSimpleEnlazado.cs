@@ -18,7 +18,7 @@ namespace Servicios.Colecciones.Nodos
         #region Conectores y Desconectores
         public bool ConectarSiguiente(clsNodoSimpleEnlazado<Tipo> prmNodo)
         {
-            if(prmNodo != null)
+            if (prmNodo != null)
             {
                 prmNodo.atrSiguiente = this.atrSiguiente;
                 this.atrSiguiente = prmNodo;

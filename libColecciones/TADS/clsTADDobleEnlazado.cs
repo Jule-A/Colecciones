@@ -3,11 +3,11 @@ using Servicios.Colecciones.Nodos;
 
 namespace Servicios.Colecciones.TADS
 {
-    public class clsTADSimpleEnlazado<Tipo> : clsTAD<Tipo> where Tipo : IComparable
+    public class clsTADDobleEnlazado<Tipo> : clsTAD<Tipo> where Tipo : IComparable
     {
         #region Atributos
-        private clsNodoSimpleEnlazado<Tipo> atrNodoPrimero;
-        private clsNodoSimpleEnlazado<Tipo> atrNodoUltimo;
+        private clsNodoDobleEnlazado<Tipo> atrNodoPrimero;
+        private clsNodoDobleEnlazado<Tipo> atrNodoUltimo;
         #endregion
         #region Métodos
         #region Auxiliares
@@ -18,9 +18,9 @@ namespace Servicios.Colecciones.TADS
                 if (prmIndice1 != prmIndice2)
                 {
                     IrIndice(prmIndice1);
-                    clsNodoSimpleEnlazado<Tipo> varNodoIndice1 = atrNodoActual;
+                    clsNodoDobleEnlazado<Tipo> varNodoIndice1 = atrNodoActual;
                     IrIndice(prmIndice2);
-                    clsNodoSimpleEnlazado<Tipo> varNodoIndice2 = atrNodoActual;
+                    clsNodoDobleEnlazado<Tipo> varNodoIndice2 = atrNodoActual;
                     if (varNodoIndice1 != null && varNodoIndice2 != null)
                     {
                         Tipo varItemIndice1 = varNodoIndice1.darItem();
@@ -36,32 +36,40 @@ namespace Servicios.Colecciones.TADS
         #region CRUDS
         protected override bool InsertarEn(int prmIndice, Tipo prmItem)
         {
-            clsNodoSimpleEnlazado<Tipo> varNodoNuevo = new clsNodoSimpleEnlazado<Tipo>(prmItem);
+            clsNodoDobleEnlazado<Tipo> varNodoNuevo = new clsNodoDobleEnlazado<Tipo>(prmItem);
             if (EstaVacia())
             {
                 atrNodoPrimero = varNodoNuevo;
                 atrNodoUltimo = varNodoNuevo;
                 atrNodoPrimero.ponerSiguiente(atrNodoUltimo);
+                atrNodoUltimo.ponerAnterior(atrNodoPrimero);
                 atrLongitud++;
                 return true;
             }
             if (prmIndice == 0)
             {
                 varNodoNuevo.ponerSiguiente(atrNodoPrimero);
+                atrNodoPrimero.ponerAnterior(varNodoNuevo);
                 atrNodoPrimero = varNodoNuevo;
                 atrLongitud++;
                 return true;
             }
             if (prmIndice == atrLongitud)
             {
-                atrNodoUltimo.ponerSiguiente(varNodoNuevo);
+                //atrNodoUltimo.ponerSiguiente(varNodoNuevo);
+                //varNodoNuevo.ponerAnterior(atrNodoUltimo);
+                atrNodoUltimo.ConectarSiguiente(varNodoNuevo);
                 atrNodoUltimo = varNodoNuevo;
                 atrLongitud++;
                 return true;
             }
             if (IrIndice(prmIndice - 1))
             {
-                atrNodoActual.ponerSiguiente(varNodoNuevo);
+                //varNodoNuevo.ponerSiguiente(atrNodoActual);
+                //varNodoNuevo.ponerAnterior(atrNodoActual.darAnterior());
+                //atrNodoActual.darAnterior().ponerSiguiente(varNodoNuevo);
+                //atrNodoActual.ponerAnterior(varNodoNuevo);
+                atrNodoActual.ConectarSiguiente(varNodoNuevo);
                 atrLongitud++;
                 return true;
             }
@@ -69,12 +77,12 @@ namespace Servicios.Colecciones.TADS
         }
         protected override bool ExtraerEn(int prmIndice, ref Tipo prmItem)
         {
-            clsNodoSimpleEnlazado<Tipo> varNodoNuevo;
-            if (!EstaVacia())
+            clsNodoDobleEnlazado<Tipo> varNodoNuevo;
+            if (IrIndice(prmIndice))
             {
-                if (prmIndice == 0 && atrLongitud == 1)
+                prmItem = atrItemActual;
+                if (atrLongitud - 1 == 0)
                 {
-                    prmItem = atrNodoPrimero.darItem();
                     atrNodoPrimero = null;
                     atrNodoUltimo = null;
                     atrLongitud--;
@@ -82,52 +90,58 @@ namespace Servicios.Colecciones.TADS
                 }
                 if (prmIndice == 0)
                 {
-                    prmItem = atrNodoPrimero.darItem();
-                    varNodoNuevo = atrNodoPrimero.darSiguiente();
+                    varNodoNuevo = this.atrNodoActual.darSiguiente();
+                    varNodoNuevo.ponerAnterior(null);
+                    this.atrNodoActual = varNodoNuevo;
                     atrNodoPrimero = varNodoNuevo;
                     atrLongitud--;
                     return true;
                 }
-                if (IrIndice(prmIndice - 1))
+                if (prmIndice == atrLongitud - 1)
                 {
-                    if (atrNodoActual.DesconectarSiguiente(ref prmItem))
-                    {
-                        if (prmIndice == atrLongitud - 1)
-                            atrNodoUltimo = atrNodoActual;
-                        atrLongitud--;
-                        return true;
-                    }
-                    return false;
+                    varNodoNuevo = atrNodoActual.darAnterior();
+                    atrNodoUltimo = varNodoNuevo;
+                    atrNodoActual = varNodoNuevo;
+                    atrLongitud--;
+                    return true;
                 }
+                varNodoNuevo = atrNodoActual.darSiguiente();
+                atrNodoActual.ponerSiguiente(varNodoNuevo);
+                varNodoNuevo.darSiguiente().ponerAnterior(atrNodoActual);
+                varNodoNuevo.ponerSiguiente(null);
+                varNodoNuevo.ponerAnterior(null);
+                atrLongitud--;
+                return true;
             }
             return false;
         }
         #endregion
         #region Accesores
-        public clsNodoSimpleEnlazado<Tipo> darNodoPrimero() { return atrNodoPrimero; }
-        public clsNodoSimpleEnlazado<Tipo> darNodoUltimo() { return atrNodoUltimo; }
+        public clsNodoDobleEnlazado<Tipo> darNodoPrimero() { return atrNodoPrimero; }
+        public clsNodoDobleEnlazado<Tipo> darNodoUltimo() { return atrNodoUltimo; }
         #endregion
         #region Iterador
-        clsNodoSimpleEnlazado<Tipo> atrNodoActual;
+        protected clsNodoDobleEnlazado<Tipo> atrNodoActual;
         protected override bool IrIndice(int prmIndice)
         {
-            if (prmIndice == 0)
-                return IrPrimero();
-            if (prmIndice == atrLongitud - 1)
-                return IrUltimo();
-            if (EsValido(prmIndice) && (atrIndiceActual > 0) && (atrIndiceActual < prmIndice))
-            {
-                IrPrimero();
-                while (atrIndiceActual < prmIndice)
-                    IrSiguiente();
-            }
             if (EsValido(prmIndice))
             {
-                IrPrimero();
-                while (atrIndiceActual < prmIndice)
-                    IrSiguiente();
+                if (prmIndice >= 0 && prmIndice < atrLongitud / 2)
+                {
+                    IrPrimero();
+                    while (atrIndiceActual < prmIndice)
+                        IrSiguiente();
+                    return true;
+                }
+                if (prmIndice >= atrLongitud / 2 && prmIndice <= atrLongitud - 1)
+                {
+                    IrUltimo();
+                    while (atrIndiceActual > prmIndice)
+                        IrAnterior();
+                    return true;
+                }
             }
-            return true;
+            return false;
         }
         protected override bool IrPrimero()
         {
@@ -150,6 +164,13 @@ namespace Servicios.Colecciones.TADS
                 return true;
             }
             return false;
+        }
+        protected override bool Retroceder()
+        {
+            atrIndiceActual--;
+            atrNodoActual = atrNodoActual.darAnterior();
+            atrItemActual = atrNodoActual.darItem();
+            return true;
         }
         protected override bool Avanzar()
         {
